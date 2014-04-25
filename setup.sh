@@ -12,7 +12,7 @@ if [ ! -f /usr/bin/neko ]; then
 	if [ $OS = "mac" ]; then
 		echo "no prebuilt binary available; building neko"
 		retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
-		cd ~/neko && make && sudo make install
+		cd ~/neko && make clean && make LIB_PREFIX=/usr/local os=osx && sudo make install os=osx
 	else
 		retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
 		tar -zxf ~/neko.tgz -C ~/
@@ -32,7 +32,10 @@ echo "neko v$(neko -version)"
 echo "getting haxe"
 sudo rm -rf /usr/lib/haxe
 sudo rm -f /usr/bin/haxe*
-retry wget -O ~/haxe.tgz "http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/$OS$ARCH_BITS/haxe_latest.tar.gz"
+DIR=$OS$ARCH_BITS
+if [ $OS = "mac" ]
+	DIR=mac
+retry wget -O ~/haxe.tgz "http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/$DIR/haxe_latest.tar.gz"
 cd ~
 tar -zxf haxe.tgz
 cd haxe*
