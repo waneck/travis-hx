@@ -8,16 +8,16 @@ env:
     - TARGET=js FILENAME=unit.js TOOLCHAIN=default browser
     - TARGET=php
     - TARGET=cpp
-    - TARGET=swf FILENAME=unit9.swf
+    - TARGET=flash9 FILENAME=unit9.swf
     - TARGET=as3
     - TARGET=java
     - TARGET=cs
-    - TARGET=swf8 FILENAME=unit8.swf
+    - TARGET=flash8 FILENAME=unit8.swf
 
 matrix:
   fast_finish: true
   allow_failures:
-    - env: TARGET=swf8
+    - env: TARGET=flash8
 
 
 before_install:

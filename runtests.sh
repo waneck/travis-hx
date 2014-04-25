@@ -11,7 +11,7 @@ for i in "${!TARGET[@]}"; do
 		case ${TARGET[i]} in
 			js )
 				;;
-			swf | flash | swf9 | swf8 )
+			swf | flash | swf9 | swf8 | flash8 | flash9 )
 				;;
 			as3 )
 				;;

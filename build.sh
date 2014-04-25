@@ -11,9 +11,9 @@ for i in "${!TARGET[@]}"; do
 			js )
 				haxe $HXFLAGS -js "$TARGET_DIR/js.js" || exit 1
 				;;
-			swf | flash | swf9 )
+			swf | flash | swf9 | flash9 )
 				haxe $HXFLAGS -swf "$TARGET_DIR/swf.swf" || exit 1
-			swf8 )
+			swf8 | flash8 )
 				haxe $HXFLAGS -swf -swf-version 8 "$TARGET_DIR/swf-8.swf" || exit 1
 				;;
 			as3 )

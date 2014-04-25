@@ -77,7 +77,7 @@ for i in "${!SETUP[@]}"; do
 			retry haxelib git hxcs https://github.com/HaxeFoundation/hxcs
 			mcs --version || exit 1
 			;;
-		flash | as3 | swf | swf9 | swf8 )
+		flash | as3 | swf | swf9 | swf8 | flash8 | flash9 )
 			if [ $OS = "mac" ]; then
 				retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer-dbg-osx.tar.gz -O ~/flash.tar.gz
 				tar -xvf ~/flash.tar.gz -C ~/
@@ -116,8 +116,8 @@ for i in "${!SETUP[@]}"; do
 		js )
 			for j in "${!TOOLCHAIN[@]}"; do
 				if [ ${TOOLCHAIN[j]} = "default" ] || [ ${TOOLCHAIN[j]} = "nodejs" ]; then
-					testprog nodejs -v || testprog node -v || install nodejs node
-					testprog nodejs -v || testprog nods -v || exit 1
+					testprg nodejs -v || testprog node -v || install nodejs node
+					testprog nodejs -v || testprog node -v || exit 1
 				elif [ ${TOOLCHAIN[j]} = "browser" ]; then
 					testprog phantomjs -v || install phantomjs
 					phantomjs -v || exit 1
