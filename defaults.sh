@@ -75,4 +75,4 @@ echo "$(basename $0) - $ARCH-$OS-$TARGET-$TOOLCHAIN"
 
 git --version || sudo apt-get install -y git || install git
 
-wget --version | head -n 1 || install wget
+wget --version 2>&1 > /dev/null || install wget
