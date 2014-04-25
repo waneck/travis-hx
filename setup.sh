@@ -10,20 +10,21 @@ if [ ! -f /usr/bin/neko ]; then
 	install libpcre3 pcre # pcre
 	install zlib1g libzip # zlib
 	if [ $OS = "mac" ]; then
-		echo "no prebuilt binary available; building neko"
-		retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
-		cd ~/neko && make clean && make LIB_PREFIX=/usr/local os=osx INSTALL_FLAGS= && sudo make install os=osx
-		sudo cp -Rf ~/neko/bin /usr/lib/neko
+		# echo "no prebuilt binary available; building neko"
+		# retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
+		# cd ~/neko && make clean && make LIB_PREFIX=/usr/local os=osx INSTALL_FLAGS= && sudo make install os=osx
+		# sudo cp -Rf ~/neko/bin /usr/lib/neko
+		retry wget -O ~/neko.tgz "http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-mac.tar.gz"
 	else
 		retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
-		tar -zxf ~/neko.tgz -C ~/
-		rm ~/neko.tgz
-		cd ~/neko*
-		sudo mkdir -p /usr/lib/neko
-		sudo cp -Rf * /usr/lib/neko
-		sudo ln -s /usr/lib/neko/neko* /usr/bin
-		sudo ln -s /usr/lib/neko/lib* /usr/lib
 	fi
+	tar -zxf ~/neko.tgz -C ~/
+	rm ~/neko.tgz
+	cd ~/neko*
+	sudo mkdir -p /usr/lib/neko
+	sudo cp -Rf * /usr/lib/neko
+	sudo ln -s /usr/lib/neko/neko* /usr/bin
+	sudo ln -s /usr/lib/neko/lib* /usr/lib
 fi
 
 neko -version || exit 1
