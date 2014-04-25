@@ -42,6 +42,7 @@ for i in "${!TARGET[@]}"; do
 				if [[ $BUILTFILE && ${BUILTFILE-x} ]]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/cs/bin/"*.exe; do
+						echo "mono --debug $file"
 						mono --debug $file || exit 1
 						HASRUN=1
 					done
@@ -54,6 +55,7 @@ for i in "${!TARGET[@]}"; do
 				if [[ $BUILTFILE && ${BUILTFILE-x} ]]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/java/"*.jar; do
+						echo "java -jar $file"
 						java -jar $file || exit 1
 						HASRUN=1
 					done
