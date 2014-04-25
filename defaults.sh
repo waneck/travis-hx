@@ -50,10 +50,10 @@ function install {
 		fi
 	else
 		if [ $FIRST -eq 0 ]; then
-			sudo brew update 2> /dev/null
+			brew update 2> /dev/null
 			FIRST=1
 		fi
-		retry sudo brew install $1 2> /dev/null
+		[[ $2 && ${2-x} ]] && retry brew install $2 2> /dev/null || retry brew install $1 2> /dev/null
 	fi
 }
 
@@ -64,3 +64,5 @@ function testprog {
 echo "$(basename $0) - $ARCH-$OS-$TARGET-$TOOLCHAIN"
 
 git --version || sudo apt-get install -y git || install git
+
+wget --version | head -n 1 || install wget

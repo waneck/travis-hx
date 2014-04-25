@@ -6,13 +6,13 @@ if [ ! -f /usr/bin/neko ]; then
 	sudo rm -f /usr/bin/neko*
 	sudo rm -f /usr/lib/libneko*
 	sudo rm -rf /usr/lib/neko
-	install libgc || install libgc1c2 || install libgc-dev
-	install libpcre || install libpcre3
-	install zlib1g
+	install libgc1c2 bdw-gc # boehm gc
+	install libpcre3 pcre # pcre
+	install zlib1g libzip # zlib
 	if [ $OS = "mac" ]; then
 		echo "no prebuilt binary available; building neko"
 		retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
-		cd ~neko && make && sudo make install
+		cd ~/neko && make && sudo make install
 	else
 		retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
 		tar -zxf ~/neko.tgz -C ~/
@@ -62,7 +62,7 @@ case $SETUP in
 		javac -version || exit 1
 		;;
 	cs )
-		testprog mcs --version || sudo apt-get install -y mono-mcs || install mono-mcs || exit 1
+		testprog mcs --version || install mono-mcs mono || sudo apt-get install -y mono-mcs || exit 1
 		retry haxelib git hxcs https://github.com/HaxeFoundation/hxcs
 		mcs --version || exit 1
 		;;
@@ -94,7 +94,7 @@ case $SETUP in
 		;;
 	js )
 		if [ $TOOLCHAIN = "default" ] || [ $TOOLCHAIN = "nodejs" ]; then
-			testprog nodejs -v || node -v || install nodejs
+			testprog nodejs -v || node -v || install nodejs node
 			nodejs -v || exit 1
 		elif [ $TOOLCHAIN = "browser" ]; then
 			testprog phantomjs -v || install phantomjs
