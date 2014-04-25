@@ -61,6 +61,16 @@ function testprog {
 	"$@" 2> /dev/null
 }
 
+function runflash {
+	if [ $OS = "mac" ]; then
+		"~/flashplayer.app/Contents/MacOS/Flash Player Debugger" "$@"
+	else
+		~/flashplayerdebugger "$@"
+	fi
+}
+
+PATH=$PATH:$HOME/flex_sdk_4/bin
+
 echo "$(basename $0) - $ARCH-$OS-$TARGET-$TOOLCHAIN"
 
 git --version || sudo apt-get install -y git || install git

@@ -76,35 +76,45 @@ case $SETUP in
 		mcs --version || exit 1
 		;;
 	flash | as3 | swf | swf9 | swf8 )
-		# TODO if the following doesn't work, uncomment either the next lines
-		retry wget http://hxbuilds.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.min.tar.xz
-		# retry wget http://hxbuilds.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.tar.gz
-		# retry wget http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/flashplayer_11_sa_debug.i386.tar.gz
-		install libgd2-xpm ; install ia32-libs ; install ia32-libs-multiarch ; install libgtk2.0-0:i386 ; install libxt6:i386 ; install libnss3:i386
-		[ -f /etc/init.d/xvfb ] || install xvfb
-		# retry sudo apt-get install -qq -y libgd2-xpm ia32-libs ia32-libs-multiarch
-		tar -xvf flashplayer* -C ~/
-		echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > ~/mm.cfg
-		if [ $SETUP = "as3" ] && [ ! mxmlc --version ]; then
-			#TODO if the following doesn't work, uncomment either the next lines
-			retry wget -O ~/flex.tar.xz http://hxbuilds.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin-min.tar.xz
-			#retry wget -O ~/flex.tar.gz http://hxbuilds.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin.tar.gz
-			#retry wget -O ~/flex.tar.gz http://mirror.cc.columbia.edu/pub/software/apache/flex/4.12.0/binaries/apache-flex-sdk-4.12.0-bin.tar.gz
-			tar -xvf ~/flex.tar.* -C ~
-			FLEXPATH=$HOME/apache-flex-sdk-4.12.0-bin/
-			export PATH=$PATH:$FLEXPATH/bin
-			mkdir -p $FLEXPATH/player/11.1
-			retry wget -nv http://download.macromedia.com/get/flashplayer/updaters/11/playerglobal11_1.swc -O "$FLEXPATH/player/11.1/playerglobal.swc"
-			echo "env.PLAYERGLOBAL_HOME=$FLEXPATH/player" > $FLEXPATH/env.properties
-			testprog java -version || install openjdk || install openjdk-7-jdk || exit 1
-			mxmlc --version || exit 1
+		if [ $OS = "mac" ]; then
+			retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer-dbg-osx.tar.gz -O ~/flash.tar.gz
+			tar -xvf ~/flash.tar.gz -C ~/
+			# ln -s "~/flashplayer.app/Contents/MacOS/Flash Player Debugger" ~/flashplayerdebugger
+			if [ $SETUP = "as3" ] && [ ! mxmlc --version ]; then
+				retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flex_sdk_4.mac.tar.gz
+				tar -xvf ~/flex.tar.gz -C ~
+				mxmlc --version || exit 1
+			fi
+		else
+			# TODO if the following doesn't work, uncomment either the next lines
+			retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.min.tar.xz
+			# retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.tar.gz
+			# retry wget http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/flashplayer_11_sa_debug.i386.tar.gz
+			install libgd2-xpm ; install ia32-libs ; install ia32-libs-multiarch ; install libgtk2.0-0:i386 ; install libxt6:i386 ; install libnss3:i386
+			[ -f /etc/init.d/xvfb ] || install xvfb
+			# retry sudo apt-get install -qq -y libgd2-xpm ia32-libs ia32-libs-multiarch
+			tar -xvf flashplayer* -C ~/
+			echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > ~/mm.cfg
+			if [ $SETUP = "as3" ] && [ ! mxmlc --version ]; then
+				#TODO if the following doesn't work, uncomment either the next lines
+				retry wget -O ~/flex.tar.xz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin-min.tar.xz
+				#retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin.tar.gz
+				#retry wget -O ~/flex.tar.gz http://mirror.cc.columbia.edu/pub/software/apache/flex/4.12.0/binaries/apache-flex-sdk-4.12.0-bin.tar.gz
+				tar -xvf ~/flex.tar.* -C ~
+				mv $HOME/apache-flex-sdk-4.12.0-bin/ $HOME/flex_sdk_4
+				mkdir -p $FLEXPATH/player/11.1
+				retry wget -nv http://download.macromedia.com/get/flashplayer/updaters/11/playerglobal11_1.swc -O "$FLEXPATH/player/11.1/playerglobal.swc"
+				echo "env.PLAYERGLOBAL_HOME=$FLEXPATH/player" > $FLEXPATH/env.properties
+				testprog java -version || install openjdk-7-jdk || exit 1
+				mxmlc --version || exit 1
+			fi
+			# ~/runflash || exit 1
 		fi
-		~/flashplayerdebugger
 		;;
 	js )
 		if [ $TOOLCHAIN = "default" ] || [ $TOOLCHAIN = "nodejs" ]; then
-			testprog nodejs -v || node -v || install nodejs node
-			nodejs -v || exit 1
+			testprog nodejs -v || testprog node -v || install nodejs node
+			testprog nodejs -v || testprog nods -v || exit 1
 		elif [ $TOOLCHAIN = "browser" ]; then
 			testprog phantomjs -v || install phantomjs
 			phantomjs -v || exit 1
