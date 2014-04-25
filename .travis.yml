@@ -1,6 +1,8 @@
 language: objective-c # test mac os builds 
 
 env:
+  global:
+    - OS=mac
   matrix:
     - TARGET=neko macro FILENAME=unit.n # run both on same instance
     - TARGET=js FILENAME=unit.js TOOLCHAIN=default browser
