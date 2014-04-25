@@ -80,7 +80,7 @@ case $SETUP in
 			retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer-dbg-osx.tar.gz -O ~/flash.tar.gz
 			tar -xvf ~/flash.tar.gz -C ~/
 			# ln -s "~/flashplayer.app/Contents/MacOS/Flash Player Debugger" ~/flashplayerdebugger
-			if [ $SETUP = "as3" ] && [ ! mxmlc --version ]; then
+			if [ $SETUP = "as3" ] && [ ! -f ~/flex_sdk_4/bin/mxmlc ]; then
 				retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flex_sdk_4.mac.tar.gz
 				tar -xvf ~/flex.tar.gz -C ~
 				mxmlc --version || exit 1
