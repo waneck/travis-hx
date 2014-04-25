@@ -20,7 +20,7 @@ for i in "${!TARGET[@]}"; do
 				neko "$BUILTFILE" || exit 1
 				;;
 			php )
-				[[ $BUILTFILE && ${BUILTFILE-x} ]] || BUILTFILE="$TARGET_DIR/index.php"
+				[[ $BUILTFILE && ${BUILTFILE-x} ]] || BUILTFILE="$TARGET_DIR/php/index.php"
 				php "$BUILTFILE" || exit 1
 				;;
 			cpp )
