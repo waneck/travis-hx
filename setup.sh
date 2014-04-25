@@ -1,91 +1,28 @@
 #!/bin/bash
-
-# setting up defaults 
-[[ $OS && ${OS-x} ]] || OS=linux
-OS=$(echo $OS | tr '[:upper:]' '[:lower:]')
-
-[[ $SETUP && ${SETUP-x} ]] || SETUP=$TARGET
-
-[[ $ARCH && ${ARCH-x} ]] || ARCH=x86_64
-case $ARCH in
-	x86_64 )
-		ARCH_BITS=64
-		NEKO_ARCH=64
-		;;
-	i686 )
-		if [ $OS = mac ]; then
-			echo "Only x86_64 architecture is support for mac"
-			exit 1
-		fi
-		ARCH_BITS=32
-		NEKO_ARCH=
-		;;
-	* )
-		echo "Unknown architecture $ARCH"
-		exit 1
-		;;
-esac
-
-[[ $TOOLCHAIN && ${TOOLCHAIN-x} ]] || TOOLCHAIN=default
-
-function retry {
-	if [[ $TRAVIS && ${TRAVIS-x} ]]; then
-		travis_retry "$@"
-	else
-		$@
-	fi
-}
-
-FIRST=0
-
-function install {
-	if [ $OS = "linux" ]; then
-		if [ $FIRST -eq 0 ]; then
-			retry sudo apt-get update -qq
-			FIRST=1
-		fi
-		if [ $ARCH = "i686" ] && [[ ! $1 == *:i386 ]]; then
-			retry sudo apt-get install -qq -y $1:i386 2> /dev/null
-		else
-			retry sudo apt-get install -qq -y $1 2> /dev/null
-		fi
-	else
-		if [ $FIRST -eq 0 ]; then
-			sudo brew update 2> /dev/null
-			FIRST=1
-		fi
-		retry sudo brew install $1 2> /dev/null
-	fi
-}
-
-function testprog {
-	"$@" 2> /dev/null
-}
-
-echo "$ARCH-$OS-$TARGET-$TOOLCHAIN"
-
-git --version || sudo apt-get install -y git || install git
+source $(dirname $0)/defaults.sh
 
 # compile neko
-sudo rm -f /usr/bin/neko*
-sudo rm -f /usr/lib/libneko*
-sudo rm -rf /usr/lib/neko
-install libgc || install libgc1c2 || install libgc-dev
-install libpcre || install libpcre3
-install zlib1g
-if [ $OS = "mac" ]; then
-	echo "no prebuilt binary available; building neko"
-	retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
-	cd ~neko && make && sudo make install
-else
-	retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
-	tar -zxf ~/neko.tgz -C ~/
-	rm ~/neko.tgz
-	cd ~/neko*
-	sudo mkdir -p /usr/lib/neko
-	sudo cp -Rf * /usr/lib/neko
-	sudo ln -s /usr/lib/neko/neko* /usr/bin
-	sudo ln -s /usr/lib/neko/lib* /usr/lib
+if [ ! -f /usr/bin/neko ]; then
+	sudo rm -f /usr/bin/neko*
+	sudo rm -f /usr/lib/libneko*
+	sudo rm -rf /usr/lib/neko
+	install libgc || install libgc1c2 || install libgc-dev
+	install libpcre || install libpcre3
+	install zlib1g
+	if [ $OS = "mac" ]; then
+		echo "no prebuilt binary available; building neko"
+		retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
+		cd ~neko && make && sudo make install
+	else
+		retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
+		tar -zxf ~/neko.tgz -C ~/
+		rm ~/neko.tgz
+		cd ~/neko*
+		sudo mkdir -p /usr/lib/neko
+		sudo cp -Rf * /usr/lib/neko
+		sudo ln -s /usr/lib/neko/neko* /usr/bin
+		sudo ln -s /usr/lib/neko/lib* /usr/lib
+	fi
 fi
 
 neko -version || exit 1
