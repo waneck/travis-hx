@@ -44,4 +44,5 @@ for i in "${!TARGET[@]}"; do
 				echo "unrecognized target ${TARGET[i]}"
 				;;
 		esac
+	done
 done

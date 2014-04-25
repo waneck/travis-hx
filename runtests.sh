@@ -69,4 +69,5 @@ for i in "${!TARGET[@]}"; do
 				echo "unrecognized setup ${TARGET[i]}"
 				;;
 		esac
+	done
 done
