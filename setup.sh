@@ -35,6 +35,7 @@ sudo rm -f /usr/bin/haxe*
 DIR=$OS$ARCH_BITS
 if [ $OS = "mac" ]
 	DIR=mac
+fi
 retry wget -O ~/haxe.tgz "http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/$DIR/haxe_latest.tar.gz"
 cd ~
 tar -zxf haxe.tgz
