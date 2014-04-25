@@ -63,7 +63,7 @@ for i in "${!SETUP[@]}"; do
 			retry haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
 			cd ~/haxelib/hxcpp/git/project
 			if [ $OS = "mac" ]; then
-				neko build.n mac-m32 mac-m64 -DHXCPP_GCC || exit 1
+				neko build.n -DHXCPP_GCC || exit 1
 			else
 				neko build.n || exit 1
 			fi
@@ -129,5 +129,3 @@ for i in "${!SETUP[@]}"; do
 			;;
 	esac
 done
-
-cd $TRAVIS_BUILD_DIR
