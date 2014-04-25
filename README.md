@@ -10,13 +10,16 @@ Defines the setup to be configured. This has exactly a 1:1 correspondence with t
 #### TARGET_FILE
 The target file as specified by the haxe build.
 
+#### HXFLAGS
+If you decide to build using hx-travis' build scripts, use this flags to configure the flags used to call the haxe compiler
+
 #### ARCH
 Defines the architecture to be used as test. The following architectures may be used:
 
 | ARCH    | Description      |  Implemented targets                                  |
 | ------  | ---------------- | ----------------------------------------------------- |
 | x86_64* | 64-bit           | all; flash is always 32-bit
-| i686    | 32-bit           | haxe, neko
+| i686    | 32-bit           | haxe, neko, js (node and phantomjs), php
 
 #### OS
 The target OS. Currently Travis support both Linux and Mac; A Windows environment may be able to be emulated in the future

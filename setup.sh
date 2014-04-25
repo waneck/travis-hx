@@ -62,7 +62,7 @@ function testprog {
 	"$@" 2> /dev/null
 }
 
-echo "$ARCH-$OS-$TARGET-$TOOLCHAIN-$SETUP"
+echo "$ARCH-$OS-$TARGET-$TOOLCHAIN"
 
 git --version || sudo apt-get install -y git || install git
 
@@ -110,7 +110,7 @@ mkdir -p ~/haxelib && haxelib setup ~/haxelib || exit 1
 
 case $SETUP in
 	php )
-		testprog php -v || sudo apt-get install -y php5 || install php5
+		testprog php -v || install php5-cli || install php5
 		;;
 	cpp )
 		install gcc-multilib
