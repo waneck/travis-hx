@@ -72,6 +72,9 @@ function runflash {
 PATH=$PATH:$HOME/flex_sdk_4/bin
 
 echo "$(basename $0) - $ARCH-$OS-$TARGET-$TOOLCHAIN"
+IFS=' ' read -a SETUP <<< "$SETUP"
+IFS=' ' read -a TARGET <<< "$TARGET"
+IFS=' ' read -a TOOLCHAIN <<< "$TOOLCHAIN"
 
 git --version || sudo apt-get install -y git || install git
 
