@@ -12,7 +12,8 @@ if [ ! -f /usr/bin/neko ]; then
 	if [ $OS = "mac" ]; then
 		echo "no prebuilt binary available; building neko"
 		retry git clone https://github.com/HaxeFoundation/neko.git ~/neko
-		cd ~/neko && make clean && make LIB_PREFIX=/usr/local os=osx && sudo make install os=osx
+		cd ~/neko && make clean && make LIB_PREFIX=/usr/local os=osx INSTALL_FLAGS= && sudo make install os=osx
+		sudo cp -Rf ~/neko/bin /usr/lib/neko
 	else
 		retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
 		tar -zxf ~/neko.tgz -C ~/
@@ -58,7 +59,11 @@ case $SETUP in
 		install g++-multilib
 		retry haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
 		cd ~/haxelib/hxcpp/git/project
-		neko build.n || exit 1
+		if [ $OS = "mac" ]; then
+			neko build.n mac-m32 mac-m64 -DHXCPP_GCC || exit 1
+		else
+			neko build.n || exit 1
+		fi
 		;;
 	java )
 		testprog javac -version || install openjdk || sudo apt-get install -y openjdk-7-jdk || install openjdk-7-jdk || exit 1
