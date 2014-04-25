@@ -24,7 +24,7 @@ for i in "${!TARGET[@]}"; do
 				php "$BUILTFILE" || exit 1
 				;;
 			cpp )
-				if [ ! -z $BUILTFILE ]; then
+				if [ -z $BUILTFILE ]; then
 					# get first executable at directory
 					HASRUN=0
 					for file in "$TARGET_DIR/cpp/"*; do
@@ -35,11 +35,11 @@ for i in "${!TARGET[@]}"; do
 					done
 					[ $HASRUN -eq 1 ] || exit 1
 				else
-					$BUILDFILE || exit 1
+					$BUILTFILE || exit 1
 				fi
 				;;
 			cs )
-				if [ ! -z $BUILTFILE ]; then
+				if [ -z $BUILTFILE ]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/cs/bin/"*.exe; do
 						echo "mono --debug $file"
@@ -48,11 +48,12 @@ for i in "${!TARGET[@]}"; do
 					done
 					[ $HASRUN -eq 1 ] || exit 1
 				else
+					echo "mono --debug $BUILTFILE"
 					mono --debug $BUILTFILE || exit 1
 				fi
 				;;
 			java )
-				if [ ! -z $BUILTFILE ]; then
+				if [ -z $BUILTFILE ]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/java/"*.jar; do
 						echo "java -jar $file"
