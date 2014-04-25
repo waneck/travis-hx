@@ -9,7 +9,7 @@ env:
     - TARGET=php
     - TARGET=cpp
     - TARGET=flash9 FILENAME=unit9.swf
-    - TARGET=as3
+    - TARGET=as3 PATH=$PATH:$HOME/flex_sdk_4/bin
     - TARGET=java
     - TARGET=cs
     - TARGET=flash8 FILENAME=unit8.swf
