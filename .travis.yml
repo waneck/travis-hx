@@ -1,0 +1,28 @@
+language: objective-c # test mac os builds 
+
+env:
+  matrix:
+    - TARGET=neko macro FILENAME=unit.n # run both on same instance
+    - TARGET=js FILENAME=unit.js TOOLCHAIN=default browser
+    - TARGET=php
+    - TARGET=cpp
+    - TARGET=swf FILENAME=unit9.swf
+    - TARGET=as3
+    - TARGET=java
+    - TARGET=cs
+    - TARGET=swf8 FILENAME=unit8.swf
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: TARGET=swf8
+
+
+before_install:
+  - travis_retry git clone https://github.com/HaxeFoundation/haxe.git ~/haxegit
+  - $TRAVIS_BUILD_DIR/setup.sh
+
+script:
+  - cd ~/haxegit/tests/unit
+  - haxe compile-$TARGET.hxml
+  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME

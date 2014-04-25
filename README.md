@@ -7,7 +7,7 @@ The following environment variables are sensitive by the script runtime:
 #### TARGET
 Defines the setup to be configured. This has exactly a 1:1 correspondence with the haxe target defined by the command-line
 
-#### TARGET_FILE
+#### TARGET_DIR
 The target file as specified by the haxe build.
 
 #### HXFLAGS
@@ -27,7 +27,7 @@ The target OS. Currently Travis support both Linux and Mac; A Windows environmen
 | OS     | Implemented targets
 | ------ | ------------------- |
 | Linux* | all
-| Mac    | -
+| Mac    | all
 
 #### TOOLCHAIN
 If applicable, specifies a custom toolchain to be used for building / running. Default is always `default`
