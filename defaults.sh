@@ -31,7 +31,10 @@ esac
 
 function retry {
 	if [[ $TRAVIS && ${TRAVIS-x} ]]; then
-		travis_retry "$@"
+		for i in 0 1 2 3; do
+			$@ && return 0
+		done
+		return 1
 	else
 		$@
 	fi
