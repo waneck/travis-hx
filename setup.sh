@@ -33,7 +33,7 @@ echo "getting haxe"
 sudo rm -rf /usr/lib/haxe
 sudo rm -f /usr/bin/haxe*
 DIR=$OS$ARCH_BITS
-if [ $OS = "mac" ]
+if [ $OS = "mac" ]; then
 	DIR=mac
 fi
 retry wget -O ~/haxe.tgz "http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/$DIR/haxe_latest.tar.gz"
