@@ -28,7 +28,7 @@ for i in "${!TARGET[@]}"; do
 					# get first executable at directory
 					HASRUN=0
 					for file in "$TARGET_DIR/cpp/"*; do
-						if [ -x $file ]; then
+						if [ -x $file ] && [ -f $file ]; then
 							$file || exit 1
 							HASRUN=1
 						fi
