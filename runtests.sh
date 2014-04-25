@@ -16,15 +16,15 @@ for i in "${!TARGET[@]}"; do
 			as3 )
 				;;
 			neko )
-				[ -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/neko.n"
+				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/neko.n"
 				neko "$BUILTFILE" || exit 1
 				;;
 			php )
-				[ -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/php/index.php"
+				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/php/index.php"
 				php "$BUILTFILE" || exit 1
 				;;
 			cpp )
-				if [ -z $BUILTFILE ]; then
+				if [ ! -z $BUILTFILE ]; then
 					# get first executable at directory
 					HASRUN=0
 					for file in "$TARGET_DIR/cpp/"*; do
@@ -39,7 +39,7 @@ for i in "${!TARGET[@]}"; do
 				fi
 				;;
 			cs )
-				if [ -z $BUILTFILE ]; then
+				if [ ! -z $BUILTFILE ]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/cs/bin/"*.exe; do
 						echo "mono --debug $file"
@@ -52,7 +52,7 @@ for i in "${!TARGET[@]}"; do
 				fi
 				;;
 			java )
-				if [ -z $BUILTFILE ]; then
+				if [ ! -z $BUILTFILE ]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/java/"*.jar; do
 						echo "java -jar $file"
