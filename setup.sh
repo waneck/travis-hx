@@ -99,7 +99,7 @@ for i in "${!SETUP[@]}"; do
 				tar -xvf flashplayer* -C ~/
 				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > ~/mm.cfg
 				mxmlc --version
-				if [ $? -neq 0 ] && [ ${SETUP[i]} = "as3" ]; then
+				if [ $? -ne 0 ] && [ ${SETUP[i]} = "as3" ]; then
 					#TODO if the following doesn't work, uncomment either the next lines
 					retry wget -O ~/flex.tar.xz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin-min.tar.xz
 					#retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin.tar.gz
