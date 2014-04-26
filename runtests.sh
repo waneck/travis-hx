@@ -24,10 +24,13 @@ for i in "${!TARGET[@]}"; do
 						cd $(dirname $0)/extra/saucelabs
 						npm install wd || exit 1
 						cd "$CURDIR"
-						echo "$PWD"
-						ls
 						retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
 						nekotools server &
+						if [ ! -f "unit-js.html" ]; then
+							echo '<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>Tests (JS)</title></head><body id="haxe:trace">' > unit-js.html
+							echo "<script src=\"$BUILTFILE\"></script>" >> unit-js.html
+							echo "</body></html>" >> unit-js.html
+						fi
 						node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
 						;;
 					* )
