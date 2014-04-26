@@ -20,7 +20,7 @@ for i in "${!TARGET[@]}"; do
 						fi
 						;;
 					browser )
-						npm install wd
+						sudo npm install wd -g || exit 1
 						retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
 						nekotools server &
 						node $(dirname $0)/extra/saucelabs/RunSauceLabs.js
