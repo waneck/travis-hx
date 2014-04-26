@@ -5,7 +5,7 @@ env:
     - OS=mac
   matrix:
     - TARGET=neko macro FILENAME=unit.n # run both on same instance
-    - TARGET=js FILENAME=unit.js TOOLCHAIN=default browser NODECMD="var unit = require('./unit.js').unit; unit.Test.main(); process.exit(unit.Test.success ? 0 \: 1);"
+    - TARGET=js FILENAME=unit.js TOOLCHAIN=default browser NODECMD="var unit = require('./unit.js').unit; unit.Test.main(); if (unit.Test.success) process.exit(0); else process.exit(1);"
       #- TARGET=php
       #- TARGET=cpp
       #- TARGET=flash9 FILENAME=unit9.swf
