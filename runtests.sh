@@ -23,7 +23,7 @@ for i in "${!TARGET[@]}"; do
 						CURDIR=$PWD
 						cd $(dirname $0)/extra/saucelabs
 						npm install wd || exit 1
-						cd "$PWD"
+						cd "$CURDIR"
 						echo "$PWD"
 						ls
 						retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
