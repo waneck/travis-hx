@@ -10,6 +10,14 @@ for i in "${!TARGET[@]}"; do
 		BUILTFILE=$1
 		case ${TARGET[i]} in
 			js )
+				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/js.js"
+				case $CURTOOL in
+					default | nodejs )
+						( [ ! -z $NODECMD ] && node $NODECMD || node $BUILTFILE ) || exit 1
+						;;
+					* )
+						;;
+				esac
 				;;
 			swf | flash | swf9 | swf8 | flash8 | flash9 )
 				;;
