@@ -26,7 +26,11 @@ for i in "${!TARGET[@]}"; do
 							echo "</body></html>" >> unit-js.html
 						fi
 						nekotools server &
+						echo "phantomjs test"
+						phantomjs $(dirname $0)/extra/phantom/testphantom.js || exit 1
+
 						if [ ! -z "$SAUCE_USERNAME" ]; then
+							echo "saucelabs tests"
 							CURDIR=$PWD
 							cd $(dirname $0)/extra/saucelabs
 							npm install wd || exit 1
@@ -34,8 +38,6 @@ for i in "${!TARGET[@]}"; do
 							retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
 							node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
 						fi
-						echo "phantomjs test"
-						phantomjs $(dirname $0)/extra/testphantom.js || exit 1
 						;;
 					* )
 						;;
