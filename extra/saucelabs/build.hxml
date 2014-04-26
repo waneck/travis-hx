@@ -1,0 +1,3 @@
+-lib nodejs
+-main RunSauceLabs
+-js RunSauceLabs.js
