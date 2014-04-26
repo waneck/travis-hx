@@ -16,10 +16,11 @@ if [ ! -f /usr/bin/neko ]; then
 		# sudo cp -Rf ~/neko/bin /usr/lib/neko
 		retry wget -O ~/neko.tgz "http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-mac.tar.gz"
 	else
-		retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
+		# retry wget -O ~/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
+		retry wget -O ~/neko.tar.xz "http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-linux$NEKO_ARCH.tar.xz"
 	fi
-	tar -zxf ~/neko.tgz -C ~/
-	rm ~/neko.tgz
+	tar -zxf ~/neko.* -C ~/
+	rm ~/neko.*
 	cd ~/neko*
 	sudo mkdir -p /usr/lib/neko
 	sudo cp -Rf * /usr/lib/neko
