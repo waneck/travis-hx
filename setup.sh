@@ -106,7 +106,6 @@ for i in "${!SETUP[@]}"; do
 					#retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin.tar.gz
 					#retry wget -O ~/flex.tar.gz http://mirror.cc.columbia.edu/pub/software/apache/flex/4.12.0/binaries/apache-flex-sdk-4.12.0-bin.tar.gz
 					tar -xf ~/flex.tar.* -C ~
-					mv $HOME/apache-flex-sdk-4.12.0-bin/ $HOME/flex_sdk_4
 					FLEXPATH=$HOME/flex_sdk_4
 					mkdir -p $FLEXPATH/player/11.1
 					retry wget -nv http://download.macromedia.com/get/flashplayer/updaters/11/playerglobal11_1.swc -O "$FLEXPATH/player/11.1/playerglobal.swc"
