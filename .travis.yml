@@ -9,7 +9,7 @@ env:
     - secure: "CgBkZlD50ICcik+vYxiKUU/gLGz8G2a62u+k4VoinbOMR9eWk2mk5Qxt4dVMZH2cYVBzFrBooFm/2R+DjrlImM4KoUEtHwW7uPSrEuIGTcIwx7D7wtF1BmJnnnt2Tn5Aq8osYby0plLtPyCQ6TFBDppXc9fnNQnVglZ0HA3XcNE="
   matrix:
     - TARGET=neko macro FILENAME=unit.n # run both on same instance
-    - TARGET=js FILENAME=unit.js TOOLCHAIN=default browser NODECMD="var unit = require('./unit.js').unit; unit.Test.main(); if (unit.Test.success) process.exit(0); else process.exit(1);" SAUCE_BROWSERS=sauce-browsers-example.json
+    - TARGET=js FILENAME=unit.js TOOLCHAIN="default browser" NODECMD="var unit = require('./unit.js').unit; unit.Test.main(); if (unit.Test.success) process.exit(0); else process.exit(1);" SAUCE_BROWSERS=sauce-browsers-example.json
       #- TARGET=php
       #- TARGET=cpp
       #- TARGET=flash9 FILENAME=unit9.swf
