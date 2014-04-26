@@ -20,18 +20,22 @@ for i in "${!TARGET[@]}"; do
 						fi
 						;;
 					browser )
-						CURDIR=$PWD
-						cd $(dirname $0)/extra/saucelabs
-						npm install wd || exit 1
-						cd "$CURDIR"
-						retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
-						nekotools server &
 						if [ ! -f "unit-js.html" ]; then
 							echo '<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>Tests (JS)</title></head><body id="haxe:trace">' > unit-js.html
 							echo "<script src=\"$BUILTFILE\"></script>" >> unit-js.html
 							echo "</body></html>" >> unit-js.html
 						fi
-						node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
+						nekotools server &
+						if [ ! -z "$SAUCE_USERNAME" ]; then
+							CURDIR=$PWD
+							cd $(dirname $0)/extra/saucelabs
+							npm install wd || exit 1
+							cd "$CURDIR"
+							retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
+							node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
+						fi
+						echo "phantomjs test"
+						phantomjs $(dirname $0)/extra/testphantom.js || exit 1
 						;;
 					* )
 						;;
