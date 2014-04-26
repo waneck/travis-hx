@@ -81,11 +81,11 @@ for i in "${!SETUP[@]}"; do
 		flash | as3 | swf | swf9 | swf8 | flash8 | flash9 )
 			if [ $OS = "mac" ]; then
 				retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer-dbg-osx.tar.gz -O ~/flash.tar.gz
-				tar -xvf ~/flash.tar.gz -C ~/
+				tar -xf ~/flash.tar.gz -C ~/
 				# ln -s "~/flashplayer.app/Contents/MacOS/Flash Player Debugger" ~/flashplayerdebugger
 				if [ ${SETUP[i]} = "as3" ] && [ ! -f ~/flex_sdk_4/bin/mxmlc ]; then
 					retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flex_sdk_4.mac.tar.gz
-					tar -xvf ~/flex.tar.gz -C ~
+					tar -xf ~/flex.tar.gz -C ~
 					mxmlc --version || exit 1
 				fi
 			else
@@ -96,7 +96,7 @@ for i in "${!SETUP[@]}"; do
 				install libgd2-xpm ; install ia32-libs ; install ia32-libs-multiarch ; install libgtk2.0-0:i386 ; install libxt6:i386 ; install libnss3:i386
 				[ -f /etc/init.d/xvfb ] || install xvfb
 				# retry sudo apt-get install -qq -y libgd2-xpm ia32-libs ia32-libs-multiarch
-				tar -xvf flashplayer* -C ~/
+				tar -xf flashplayer* -C ~/
 				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > ~/mm.cfg
 				mxmlc --version
 				if [ $? -ne 0 ] && [ ${SETUP[i]} = "as3" ]; then
@@ -104,8 +104,9 @@ for i in "${!SETUP[@]}"; do
 					retry wget -O ~/flex.tar.xz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin-min.tar.xz
 					#retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin.tar.gz
 					#retry wget -O ~/flex.tar.gz http://mirror.cc.columbia.edu/pub/software/apache/flex/4.12.0/binaries/apache-flex-sdk-4.12.0-bin.tar.gz
-					tar -xvf ~/flex.tar.* -C ~
+					tar -xf ~/flex.tar.* -C ~
 					mv $HOME/apache-flex-sdk-4.12.0-bin/ $HOME/flex_sdk_4
+					FLEXPATH=$HOME/flex_sdk_4
 					mkdir -p $FLEXPATH/player/11.1
 					retry wget -nv http://download.macromedia.com/get/flashplayer/updaters/11/playerglobal11_1.swc -O "$FLEXPATH/player/11.1/playerglobal.swc"
 					echo "env.PLAYERGLOBAL_HOME=$FLEXPATH/player" > $FLEXPATH/env.properties
