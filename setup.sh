@@ -98,7 +98,8 @@ for i in "${!SETUP[@]}"; do
 				# retry sudo apt-get install -qq -y libgd2-xpm ia32-libs ia32-libs-multiarch
 				tar -xvf flashplayer* -C ~/
 				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > ~/mm.cfg
-				if [ ${SETUP[i]} = "as3" ] && [ ! mxmlc --version ]; then
+				mxmlc --version
+				if [ $? -neq 0 ] && [ ${SETUP[i]} = "as3" ]; then
 					#TODO if the following doesn't work, uncomment either the next lines
 					retry wget -O ~/flex.tar.xz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin-min.tar.xz
 					#retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/apache-flex-sdk-4.12.0-bin.tar.gz
