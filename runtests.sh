@@ -13,7 +13,7 @@ for i in "${!TARGET[@]}"; do
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/js.js"
 				case $CURTOOL in
 					default | nodejs )
-						( [ ! -z $NODECMD ] && node -e $NODECMD || node $BUILTFILE ) || exit 1
+						[ ! -z $NODECMD ] && node -e $NODECMD || node $BUILTFILE || exit 1
 						;;
 					* )
 						;;
