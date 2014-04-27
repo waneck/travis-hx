@@ -69,9 +69,11 @@ class RunSauceLabs {
 								} else {
 									['neko', path.resolve(untyped __dirname, '../evaluate-test/evaluate-test.n')];
 								};
+								console.log("getting response from ", prog.join(" "));
 
 								var child = child_process.exec(prog[0], prog.slice(1), function(code,stdout,stderr) {
 									test = code.code == 0;
+									console.log("passed: " + test);
 									success = success && test;
 
 									//let saucelabs knows the result

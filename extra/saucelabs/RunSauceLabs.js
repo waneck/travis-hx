@@ -76,13 +76,15 @@ RunSauceLabs.main = function() {
 							var test = false;
 							var prog;
 							if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD").split(" "); else prog = ["neko",js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n")];
+							js.Node.console.log("getting response from ",prog.join(" "));
 							var child = js.Node.require("child_process").exec(prog[0],prog.slice(1),function(code,stdout,stderr) {
 								test = code.code == 0;
+								js.Node.console.log("passed: " + (test == null?"null":"" + test));
 								success = success && test;
 								browser.sauceJobUpdate({ passed : test},function(err4) {
-									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 79, className : "RunSauceLabs", methodName : "main"})) return;
+									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 81, className : "RunSauceLabs", methodName : "main"})) return;
 									browser.quit(function(err5) {
-										if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 81, className : "RunSauceLabs", methodName : "main"})) return;
+										if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 83, className : "RunSauceLabs", methodName : "main"})) return;
 										testBrowsers1(browsers1);
 									});
 								});
