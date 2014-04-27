@@ -1,0 +1,6 @@
+clone_folder: c:\projects\travis-hx
+
+install:
+  - echo starting
+  - dir
+  - extra\appveyor\AppVeyor.exe setup
