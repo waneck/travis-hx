@@ -67,7 +67,7 @@ for i in "${!TARGET[@]}"; do
 				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
 				for i in 0 1 2 3 4; do
-					sleep 2
+					sleep 10
 					if [ -f "$FLASHLOGPATH" ]; then
 						break
 					fi
