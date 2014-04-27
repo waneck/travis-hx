@@ -28,6 +28,16 @@ class AppVeyor
 	static function setup()
 	{
 		var home = Sys.getEnv("HOME");
+		if (home == null)
+		{
+			trace('home is null');
+			home = Sys.getEnv("HOMEPATH");
+		}
+		if (home == null)
+		{
+			trace('home is still null');
+			home = 'C:\\HaxeToolkit';
+		}
 		var toolkit = "C:\\HaxeToolkit";
 		createDirectory('C:\\HaxeToolkit');
 		// download neko
