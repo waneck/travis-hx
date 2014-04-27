@@ -63,6 +63,8 @@ class AppVeyor
 		// setup haxelib
 		createDirectory('$home/haxelib');
 		cmd('haxelib',['setup','$home/haxelib']);
+		cmd('haxelib',['list']);
+		trace("test haxelib");
 
 		cmd('haxe',[]); //check if it's installed correctly
 		trace('configuring target');
@@ -134,7 +136,7 @@ class AppVeyor
 		do
 		{
 			ret = Sys.command(cmd,args);
-			if (ret == 0)
+			if (ret == 0 || ret < 0)
 			{
 				return 0;
 			}
