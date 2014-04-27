@@ -65,6 +65,8 @@ for i in "${!SETUP[@]}"; do
 			cd $HOME/haxelib/hxcpp/git/project
 			if [ $OS = "mac" ]; then
 				neko build.n -DHXCPP_GCC || exit 1
+			elif [ $ARCH = "i686" ]; then
+				neko build.n clean ndll-linux-m32 || exit 1
 			else
 				neko build.n || exit 1
 			fi
