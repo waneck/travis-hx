@@ -4,3 +4,8 @@ install:
   - echo starting
   - dir
   - extra\appveyor\AppVeyor.exe setup
+  - dir C:
+  - dir C:\HaxeToolkit
+
+build_script:
+  - C:\HaxeToolkit\haxe\haxe
