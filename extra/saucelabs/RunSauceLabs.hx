@@ -71,9 +71,9 @@ class RunSauceLabs {
 								};
 								console.log("getting response from ", prog);
 
-								var child = child_process.exec(prog, function(code,stdout,stderr) {
+								var child = child_process.exec(prog, null, function(code,stdout,stderr) {
 									console.log(stderr);
-									test = code.code == 0;
+									test = code == null || code.code == 0;
 									console.log("passed: " + test +" (" + code.code + ") ");
 									success = success && test;
 

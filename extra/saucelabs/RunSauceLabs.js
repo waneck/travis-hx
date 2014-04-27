@@ -78,13 +78,14 @@ RunSauceLabs.main = function() {
 							if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD"); else prog = "neko " + js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n");
 							js.Node.console.log("getting response from ",prog);
 							var child = js.Node.require("child_process").exec(prog,null,function(code,stdout,stderr) {
-								test = code.code == 0;
+								js.Node.console.log(stderr);
+								test = code == null || code.code == 0;
 								js.Node.console.log("passed: " + (test == null?"null":"" + test) + " (" + code.code + ") ");
 								success = success && test;
 								browser.sauceJobUpdate({ passed : test},function(err4) {
-									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 81, className : "RunSauceLabs", methodName : "main"})) return;
+									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 82, className : "RunSauceLabs", methodName : "main"})) return;
 									browser.quit(function(err5) {
-										if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 83, className : "RunSauceLabs", methodName : "main"})) return;
+										if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 84, className : "RunSauceLabs", methodName : "main"})) return;
 										testBrowsers1(browsers1);
 									});
 								});
