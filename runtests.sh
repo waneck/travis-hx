@@ -43,9 +43,36 @@ for i in "${!TARGET[@]}"; do
 						;;
 				esac
 				;;
-			swf | flash | swf9 | swf8 | flash8 | flash9 )
-				;;
-			as3 )
+			swf | flash | swf9 | swf8 | flash8 | flash9 | as3 )
+				if [ $CURTARGET = "as3" ]; then
+					# compile as3
+					[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/as3"
+					PATH=$PATH:$HOME/flex_sdk_4
+					mxmlc -static-link-runtime-shared-libraries=true -debug $BUILTFILE/__main__.as --output "$TARGET_DIR/as3.swf"
+					BUILTFILE="$TARGET_DIR/as3.swf"
+				fi
+				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/$CURTARGET.swf"
+				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > $HOME/mm.cfg
+				if [ $OS = "linux" ]; then
+					export DISPLAY=":99.0"
+					export AUDIODEV=null
+					sh -e /etc/init.d/xvfb start
+					FLASHLOGPATH=$HOME/.macromedia/Flash_Player/Logs/flashlog.txt
+				else
+					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
+				fi
+				runflash "$BUILTFILE" &
+				for i in 0 1 2 3 4; do
+					sleep 2
+					if [ -f "$FLASHLOGPATH" ]; then
+						break
+					fi
+				done
+				if [ ! -f "$FLASHLOGPATH" ]; then
+					echo "$FLASHLOGPATH not found"
+					exit 1
+				fi
+				evaltest tail -f -v "$FLASHLOGPATH" || exit 1
 				;;
 			neko )
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/neko.n"
