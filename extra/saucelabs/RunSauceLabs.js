@@ -80,7 +80,7 @@ RunSauceLabs.main = function() {
 							var child = js.Node.require("child_process").exec(prog,null,function(code,stdout,stderr) {
 								js.Node.console.log(stderr);
 								test = code == null || code.code == 0;
-								js.Node.console.log("passed: " + (test == null?"null":"" + test) + " (" + code.code + ") ");
+								js.Node.console.log("passed: " + (test == null?"null":"" + test));
 								success = success && test;
 								browser.sauceJobUpdate({ passed : test},function(err4) {
 									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 82, className : "RunSauceLabs", methodName : "main"})) return;

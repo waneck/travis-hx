@@ -74,7 +74,7 @@ class RunSauceLabs {
 								var child = child_process.exec(prog, null, function(code,stdout,stderr) {
 									console.log(stderr);
 									test = code == null || code.code == 0;
-									console.log("passed: " + test +" (" + code.code + ") ");
+									console.log("passed: " + test);
 									success = success && test;
 
 									//let saucelabs knows the result
