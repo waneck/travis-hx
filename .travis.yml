@@ -28,5 +28,5 @@ install:
 
 script:
   - cd ~/haxegit/tests/unit
-  - haxe compile-$TARGET.hxml
+  - haxe compile-$TARGET.hxml -D fdb
   - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME
