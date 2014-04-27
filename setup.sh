@@ -119,7 +119,7 @@ for i in "${!SETUP[@]}"; do
 		js )
 			for j in "${!TOOLCHAIN[@]}"; do
 				if [ ${TOOLCHAIN[j]} = "default" ] || [ ${TOOLCHAIN[j]} = "nodejs" ]; then
-					testprg nodejs -v || testprog node -v || install nodejs node
+					testprog nodejs -v || testprog node -v || install nodejs node
 					testprog nodejs -v || testprog node -v || exit 1
 				elif [ ${TOOLCHAIN[j]} = "browser" ]; then
 					testprog phantomjs -v || install phantomjs
