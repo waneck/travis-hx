@@ -18,7 +18,6 @@ class EvalTest
 				line =line.toLowerCase();
 				if (line.indexOf("success: ") >= 0)
 				{
-					trace( line.indexOf('success: true') );
 					Sys.exit( line.indexOf('success: true') >= 0 ? 0 : 1);
 				} else if (line.indexOf("some tests failures") >= 0) {
 					explicitFailed = true;
