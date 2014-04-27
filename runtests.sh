@@ -66,11 +66,12 @@ for i in "${!TARGET[@]}"; do
 				ls
 				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
-				for i in 0 1 2 3 4; do
-					sleep 10
+				for i in 0 1 2 3 4 5; do
+					sudo chmod 777 "$FLASHLOGPATH"
 					if [ -f "$FLASHLOGPATH" ]; then
 						break
 					fi
+					sleep 2
 					echo "waiting for $FLASHLOGPATH"
 				done
 				if [ ! -f "$FLASHLOGPATH" ]; then
