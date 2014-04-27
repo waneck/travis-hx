@@ -6,15 +6,16 @@ env:
     - secure: "YE0n2BcdXokZ/hgcOoptp0bIw+sMKme/+XMNxT01BYqsSN/7KyNkEC5SpAN6K5IYVTBo59QP3EtDQtrsX5uMo9PL84CQzt2wKm2t9yByGIk3TehQ339fdJZKbnd9cVL726fCcDp06Ld73RNh63pc+DglmrKYB5Lx5ElwTs9PnPU="
       # SAUCE_USERNAME
     - secure: "CgBkZlD50ICcik+vYxiKUU/gLGz8G2a62u+k4VoinbOMR9eWk2mk5Qxt4dVMZH2cYVBzFrBooFm/2R+DjrlImM4KoUEtHwW7uPSrEuIGTcIwx7D7wtF1BmJnnnt2Tn5Aq8osYby0plLtPyCQ6TFBDppXc9fnNQnVglZ0HA3XcNE="
+    - ARCH=i686
   matrix:
     - TARGET=neko macro FILENAME=unit.n # run both on same instance
     - TARGET=js FILENAME=unit.js TOOLCHAIN="default browser" NODECMD="var unit = require('./unit.js').unit; unit.Test.main(); if (unit.Test.success) process.exit(0); else process.exit(1);" SAUCE_BROWSERS=sauce-browsers-example.json
-    - TARGET=php
+    # - TARGET=php
     - TARGET=cpp
     - TARGET=flash9 FILENAME=unit9.swf
     - TARGET=as3 PATH=$PATH:$HOME/flex_sdk_4/bin
-    - TARGET=java
-    - TARGET=cs
+    # - TARGET=java
+    # - TARGET=cs
     - TARGET=flash8 FILENAME=unit8.swf
 
 matrix:
