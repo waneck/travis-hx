@@ -17,7 +17,7 @@ if [ ! -f /usr/bin/neko ]; then
 		retry wget -O $HOME/neko.tgz "http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-mac.tar.gz"
 	else
 		# retry wget -O $HOME/neko.tgz "http://nekovm.org/_media/neko-2.0.0-$OS$NEKO_ARCH.tar.gz"
-		retry wget -O $HOME/neko.tar.xz "http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-linux$NEKO_ARCH.tar.xz"
+		retry wget -O $HOME/neko.tar.xz "http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-linux$ARCH_BITS.tar.xz"
 	fi
 	tar -xf $HOME/neko.* -C ~/
 	rm $HOME/neko.*
