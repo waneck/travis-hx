@@ -78,7 +78,7 @@ function evaltest {
 	if [[ $EVAL_TEST_CMD && ${EVAL_TEST_CMD-x} ]]; then
 		"$@" | $EVAL_TEST_CMD
 	else
-		"$@" | neko $(dirname $0)/evaluate-test.n
+		"$@" | neko $(dirname $0)/extra/evaluate-test/evaluate-test.n
 	fi
 }
 
