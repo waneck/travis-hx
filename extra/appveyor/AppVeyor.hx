@@ -3,6 +3,7 @@ import haxe.io.*;
 import sys.io.*;
 import hxcpp.StaticStd;
 import hxcpp.StaticZlib;
+import hxcpp.StaticRegexp;
 using StringTools;
 
 class AppVeyor
