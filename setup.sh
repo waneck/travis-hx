@@ -59,15 +59,16 @@ for i in "${!SETUP[@]}"; do
 			testprog php -v || install php5-cli || install php5
 			;;
 		cpp )
-			install gcc-multilib
-			install g++-multilib
 			retry haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
 			cd $HOME/haxelib/hxcpp/git/project
 			if [ $OS = "mac" ]; then
 				neko build.n -DHXCPP_GCC || exit 1
 			elif [ $ARCH = "i686" ]; then
+				sudo apt-get install -y gcc-multilib g++-multilib
 				neko build.n clean ndll-linux-m32 || exit 1
 			else
+				install gcc-multilib
+				install g++-multilib
 				neko build.n || exit 1
 			fi
 			;;
