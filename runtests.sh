@@ -27,7 +27,7 @@ for i in "${!TARGET[@]}"; do
 						fi
 						nekotools server &
 						echo "phantomjs test"
-						phantomjs $(dirname $0)/extra/phantom/testphantom.js || exit 1
+						evaltest phantomjs $(dirname $0)/extra/phantom/testphantom.js || exit 1
 
 						if [ ! -z "$SAUCE_USERNAME" ]; then
 							echo "saucelabs tests"

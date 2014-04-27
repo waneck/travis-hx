@@ -74,24 +74,21 @@ RunSauceLabs.main = function() {
 							if(!handleError(err3,{ fileName : "RunSauceLabs.hx", lineNumber : 61, className : "RunSauceLabs", methodName : "main"})) return;
 							js.Node.console.log(re);
 							var test = false;
-							var _g = 0;
-							var _g1 = re.split("\n");
-							while(_g < _g1.length) {
-								var line = _g1[_g];
-								++_g;
-								if(line.indexOf("SUCCESS: ") >= 0) {
-									test = line.indexOf("SUCCESS: true") >= 0;
-									break;
-								}
-							}
-							success = success && test;
-							browser.sauceJobUpdate({ passed : test},function(err4) {
-								if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 76, className : "RunSauceLabs", methodName : "main"})) return;
-								browser.quit(function(err5) {
-									if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 78, className : "RunSauceLabs", methodName : "main"})) return;
-									testBrowsers1(browsers1);
+							var prog;
+							if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD").split(" "); else prog = ["neko",js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n")];
+							var child = js.Node.require("child_process").exec(prog[0],prog.slice(1),function(code,stdout,stderr) {
+								test = code.code == 0;
+								success = success && test;
+								browser.sauceJobUpdate({ passed : test},function(err4) {
+									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 79, className : "RunSauceLabs", methodName : "main"})) return;
+									browser.quit(function(err5) {
+										if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 81, className : "RunSauceLabs", methodName : "main"})) return;
+										testBrowsers1(browsers1);
+									});
 								});
 							});
+							child.stdin.write(re);
+							child.stdin.end();
 						});
 					});
 				});
@@ -471,5 +468,3 @@ js.NodeC.FILE_READWRITE = "a";
 js.NodeC.FILE_READWRITE_APPEND = "a+";
 RunSauceLabs.main();
 })();
-
-//# sourceMappingURL=RunSauceLabs.js.map

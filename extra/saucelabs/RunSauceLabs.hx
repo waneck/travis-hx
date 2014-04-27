@@ -63,22 +63,28 @@ class RunSauceLabs {
 
 								//check if test is successful or not
 								var test = false;
-								for (line in re.split("\n")) {
-									if (line.indexOf("SUCCESS: ") >= 0) {
-										test = line.indexOf("SUCCESS: true") >= 0;
-										break;
-									}
-								}
-								success = success && test;
+								var prog = if (Sys.getEnv("EVAL_TEST_CMD") != null)
+								{
+									Sys.getEnv("EVAL_TEST_CMD").split(" ");
+								} else {
+									['neko', path.resolve(untyped __dirname, '../evaluate-test/evaluate-test.n')];
+								};
 
-								//let saucelabs knows the result
-								browser.sauceJobUpdate({ passed: test }, function(err) {
-									if (!handleError(err)) return;
-									browser.quit(function(err) {
+								var child = child_process.exec(prog[0], prog.slice(1), function(code,stdout,stderr) {
+									test = code.code == 0;
+									success = success && test;
+
+									//let saucelabs knows the result
+									browser.sauceJobUpdate({ passed: test }, function(err) {
 										if (!handleError(err)) return;
-										testBrowsers(browsers);
+										browser.quit(function(err) {
+											if (!handleError(err)) return;
+											testBrowsers(browsers);
+										});
 									});
 								});
+								child.stdin.write(re);
+								child.stdin.end();
 							});
 						});
 					});

@@ -74,6 +74,14 @@ function runflash {
 	fi
 }
 
+function evaltest {
+	if [[ $EVAL_TEST_CMD && ${EVAL_TEST_CMD-x} ]]; then
+		"$@" | $EVAL_TEST_CMD
+	else
+		"$@" | neko $(dirname $0)/evaluate-test.n
+	fi
+}
+
 PATH=$PATH:$HOME/flex_sdk_4/bin
 
 echo "$(basename $0) - $ARCH-$OS-$TARGET-$TOOLCHAIN"

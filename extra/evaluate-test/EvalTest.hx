@@ -2,7 +2,7 @@
 	Simple program that evaluates stdin to figure out if a test ended correctly.
 	This program can be overriden by defining the EVAL_TEST_CMD environment variable
 **/
-class Main
+class EvalTest
 {
 	static function main()
 	{
