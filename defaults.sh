@@ -69,9 +69,9 @@ function testprog {
 
 function runflash {
 	if [ $OS = "mac" ]; then
-		"~/flashplayer.app/Contents/MacOS/Flash Player Debugger" "$@"
+		"$HOME/flashplayer.app/Contents/MacOS/Flash Player Debugger" "$@"
 	else
-		xvfb-run ~/flashplayerdebugger "$@"
+		xvfb-run $HOME/flashplayerdebugger "$@"
 	fi
 }
 

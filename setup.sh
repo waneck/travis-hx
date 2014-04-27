@@ -82,7 +82,7 @@ for i in "${!SETUP[@]}"; do
 		flash | as3 | swf | swf9 | swf8 | flash8 | flash9 )
 			if [ $OS = "mac" ]; then
 				retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer-dbg-osx.tar.gz -O ~/flash.tar.gz
-				tar -xf ~/flash.tar.gz -C ~/
+				tar -xf $HOME/flash.tar.gz -C $HOME/
 				# ln -s "~/flashplayer.app/Contents/MacOS/Flash Player Debugger" ~/flashplayerdebugger
 				if [ ${SETUP[i]} = "as3" ] && [ ! -f ~/flex_sdk_4/bin/mxmlc ]; then
 					retry wget -O ~/flex.tar.gz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flex_sdk_4.mac.tar.gz
