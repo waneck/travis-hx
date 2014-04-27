@@ -78,6 +78,9 @@ for i in "${!TARGET[@]}"; do
 					echo "$FLASHLOGPATH not found"
 					exit 1
 				fi
+				ls -al ~
+				echo "HOME"
+				ls -al $HOME
 				echo "checking contents"
 				cat "$FLASHLOGPATH"
 				tail -f "$FLASHLOGPATH" & 
