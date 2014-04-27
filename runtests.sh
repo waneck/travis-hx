@@ -72,6 +72,7 @@ for i in "${!TARGET[@]}"; do
 					echo "$FLASHLOGPATH not found"
 					exit 1
 				fi
+				tail -f -v "$FLASHLOGPATH" & 
 				evaltest tail -f -v "$FLASHLOGPATH" || exit 1
 				;;
 			neko )
