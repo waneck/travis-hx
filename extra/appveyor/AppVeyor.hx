@@ -42,8 +42,12 @@ class AppVeyor
 			if (file.startsWith('haxe') && isDirectory('$toolkit/$file'))
 			{
 				rename('$toolkit/$file', '$toolkit/haxe');
+				break;
 			}
 		}
+		trace(readDirectory('$toolkit'));
+		trace(readDirectory('$toolkit/haxe'));
+		trace(Sys.environment());
 
 		trace('setup haxelib');
 		// setup haxelib
