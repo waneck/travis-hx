@@ -71,7 +71,7 @@ function runflash {
 	if [ $OS = "mac" ]; then
 		"$HOME/flashplayer.app/Contents/MacOS/Flash Player Debugger" "$@"
 	else
-		sudo xvfb-run $HOME/flashplayerdebugger "$@"
+		xvfb-run $HOME/flashplayerdebugger "$@"
 	fi
 }
 
