@@ -124,6 +124,12 @@ class AppVeyor
 
 	static function cmd(cmd:String,args:Array<String>,retry=0,throwOnError=true)
 	{
+		if (cmd.startsWith('haxe'))
+		{
+			cmd = 'C:\\HaxeToolkit\\haxe\\' + cmd;
+		} else if (cmd.startsWith('neko')) {
+			cmd = 'C:\\HaxeToolkit\\neko\\' + cmd;
+		}
 		var ret = -1;
 		do
 		{
