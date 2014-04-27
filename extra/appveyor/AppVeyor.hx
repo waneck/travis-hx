@@ -18,7 +18,7 @@ class AppVeyor
 		Sys.putEnv('PATH', Sys.getEnv('PATH') + ';C:\\HaxeToolkit\\neko;C:\\HaxeToolkit\\haxe');
 		Sys.putEnv('HAXEPATH', 'C:\\HaxeToolkit\\haxe');
 		Sys.putEnv('NEKO_INSTPATH', 'C:\\HaxeToolkit\\neko');
-		switch (Sys.args()[1])
+		switch (Sys.args()[0])
 		{
 			case 'setup':
 				setup();
