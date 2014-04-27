@@ -50,9 +50,9 @@ function install {
 			FIRST=1
 		fi
 		if [ $ARCH = "i686" ] && [[ ! $1 == *:i386 ]]; then
-			retry sudo apt-get install -qq -y $1:i386 2> /dev/null
+			retry sudo apt-get install -y $1:i386 2> /dev/null
 		else
-			retry sudo apt-get install -qq -y $1 2> /dev/null
+			retry sudo apt-get install -y $1 2> /dev/null
 		fi
 	else
 		if [ $FIRST -eq 0 ]; then
