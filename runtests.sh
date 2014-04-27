@@ -54,9 +54,9 @@ for i in "${!TARGET[@]}"; do
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/$CURTARGET.swf"
 				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > $HOME/mm.cfg
 				if [ $OS = "linux" ]; then
-					export DISPLAY=":99.0"
+					export DISPLAY=:99.0
 					export AUDIODEV=null
-					sh -e /etc/init.d/xvfb start
+					# sh -e /etc/init.d/xvfb start
 					FLASHLOGPATH=$HOME/.macromedia/Flash_Player/Logs/flashlog.txt
 				else
 					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
