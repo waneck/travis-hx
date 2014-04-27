@@ -12,12 +12,12 @@ for i in "${!TARGET[@]}"; do
 				haxe $HXFLAGS -js "$TARGET_DIR/js.js" || exit 1
 				;;
 			swf | flash | swf9 | flash9 )
-				haxe $HXFLAGS -swf "$TARGET_DIR/swf.swf" || exit 1
+				haxe $HXFLAGS -swf "$TARGET_DIR/$CURTARGET.swf" -D fdb || exit 1
 			swf8 | flash8 )
-				haxe $HXFLAGS -swf -swf-version 8 "$TARGET_DIR/swf-8.swf" || exit 1
+				haxe $HXFLAGS -swf -swf-version 8 "$TARGET_DIR/$CURTARGET.swf" -D fdb || exit 1
 				;;
 			as3 )
-				haxe $HXFLAGS -as3 "$TARGET_DIR/as3" || exit 1
+				haxe $HXFLAGS -as3 "$TARGET_DIR/as3" -D fdb || exit 1
 				;;
 			neko )
 				haxe $HXFLAGS -neko "$TARGET_DIR/neko.n" || exit 1
