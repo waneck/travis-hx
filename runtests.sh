@@ -71,6 +71,7 @@ for i in "${!TARGET[@]}"; do
 					if [ -f "$FLASHLOGPATH" ]; then
 						break
 					fi
+					echo "waiting for $FLASHLOGPATH"
 				done
 				if [ ! -f "$FLASHLOGPATH" ]; then
 					echo "$FLASHLOGPATH not found"
