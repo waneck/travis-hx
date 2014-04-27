@@ -83,6 +83,7 @@ for i in "${!TARGET[@]}"; do
 				ls -al $HOME
 				echo "checking contents"
 				cat "$FLASHLOGPATH"
+				ls -al $(dirname $FLASHLOGPATH)
 				tail -f "$FLASHLOGPATH" & 
 				evaltest tail -f "$FLASHLOGPATH" || exit 1
 				;;
