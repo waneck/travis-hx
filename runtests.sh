@@ -63,6 +63,8 @@ for i in "${!TARGET[@]}"; do
 					echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" | sudo tee -a "/Library/Application Support/Macromedia/mm.cfg"
 					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
 				fi
+				ls
+				runflash "NONEXISTINGFILE" &
 				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
 				for i in 0 1 2 3 4; do
