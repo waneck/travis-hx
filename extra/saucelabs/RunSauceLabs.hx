@@ -73,7 +73,7 @@ class RunSauceLabs {
 
 								var child = child_process.exec(prog[0], prog.slice(1), function(code,stdout,stderr) {
 									test = code.code == 0;
-									console.log("passed: " + test);
+									console.log("passed: " + test +" (" + code.code + ") ");
 									success = success && test;
 
 									//let saucelabs knows the result
@@ -85,6 +85,7 @@ class RunSauceLabs {
 										});
 									});
 								});
+								child.stdout.pipe(process.stdout);
 								child.stdin.write(re);
 								child.stdin.end();
 							});

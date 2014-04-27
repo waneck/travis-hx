@@ -79,7 +79,7 @@ RunSauceLabs.main = function() {
 							js.Node.console.log("getting response from ",prog.join(" "));
 							var child = js.Node.require("child_process").exec(prog[0],prog.slice(1),function(code,stdout,stderr) {
 								test = code.code == 0;
-								js.Node.console.log("passed: " + (test == null?"null":"" + test));
+								js.Node.console.log("passed: " + (test == null?"null":"" + test) + " (" + code.code + ") ");
 								success = success && test;
 								browser.sauceJobUpdate({ passed : test},function(err4) {
 									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 81, className : "RunSauceLabs", methodName : "main"})) return;
@@ -89,6 +89,7 @@ RunSauceLabs.main = function() {
 									});
 								});
 							});
+							child.stdout.pipe(js.Node.process.stdout);
 							child.stdin.write(re);
 							child.stdin.end();
 						});
