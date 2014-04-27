@@ -78,13 +78,7 @@ for i in "${!TARGET[@]}"; do
 					echo "$FLASHLOGPATH not found"
 					exit 1
 				fi
-				ls -al ~
-				echo "HOME"
-				ls -al $HOME
 				echo "checking contents"
-				cat "$FLASHLOGPATH"
-				ls -al $(dirname $FLASHLOGPATH)
-				tail -f "$FLASHLOGPATH" & 
 				evaltest tail -f "$FLASHLOGPATH" || exit 1
 				;;
 			neko )
