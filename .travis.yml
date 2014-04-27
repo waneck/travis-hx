@@ -21,7 +21,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: TARGET=flash8
+    - env: TARGET=flash8 FILENAME=unit8.swf
 
 install:
   - travis_retry git clone https://github.com/HaxeFoundation/haxe.git ~/haxegit
