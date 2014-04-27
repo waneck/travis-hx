@@ -95,7 +95,7 @@ class AppVeyor
 		for (entry in tar.read())
 		{
 			createDirectory(target + '/' + Path.directory(entry.fileName));
-			trace(entry);
+			trace(entry.fileName,entry.data.length,entry.fileSize);
 			if (entry.data != null && entry.data.length > 0 && entry.fileSize > 0)
 			{
 				File.saveBytes( target + '/' + entry.fileName, entry.data );
