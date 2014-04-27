@@ -89,6 +89,7 @@ for i in "${!SETUP[@]}"; do
 					tar -xf $HOME/flex.tar.gz -C ~
 					mxmlc --version || exit 1
 				fi
+				sudo mkdir -p "/Library/Application Support/Macromedia"
 				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" | sudo tee -a "/Library/Application Support/Macromedia/mm.cfg"
 			else
 				# TODO if the following doesn't work, uncomment either the next lines
