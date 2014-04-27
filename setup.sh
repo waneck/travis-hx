@@ -89,6 +89,7 @@ for i in "${!SETUP[@]}"; do
 					tar -xf $HOME/flex.tar.gz -C ~
 					mxmlc --version || exit 1
 				fi
+				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" | sudo tee -a "/Library/Application Support/Macromedia/mm.cfg"
 			else
 				# TODO if the following doesn't work, uncomment either the next lines
 				retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.min.tar.xz

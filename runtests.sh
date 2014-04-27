@@ -59,6 +59,7 @@ for i in "${!TARGET[@]}"; do
 					# sh -e /etc/init.d/xvfb start
 					FLASHLOGPATH=$HOME/.macromedia/Flash_Player/Logs/flashlog.txt
 				else
+					echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" | sudo tee -a "/Library/Application Support/Macromedia/mm.cfg"
 					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
 				fi
 				echo "runflash $BUILTFILE"
