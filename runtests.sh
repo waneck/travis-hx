@@ -20,26 +20,60 @@ for i in "${!TARGET[@]}"; do
 						fi
 						;;
 					browser )
-						CURDIR=$PWD
-						cd $(dirname $0)/extra/saucelabs
-						npm install wd || exit 1
-						cd "$CURDIR"
-						retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
-						nekotools server &
 						if [ ! -f "unit-js.html" ]; then
 							echo '<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>Tests (JS)</title></head><body id="haxe:trace">' > unit-js.html
 							echo "<script src=\"$BUILTFILE\"></script>" >> unit-js.html
 							echo "</body></html>" >> unit-js.html
 						fi
-						node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
+						nekotools server &
+						echo "phantomjs test"
+						evaltest phantomjs $(dirname $0)/extra/phantom/testphantom.js || exit 1
+
+						if [ ! -z "$SAUCE_USERNAME" ]; then
+							echo "saucelabs tests"
+							CURDIR=$PWD
+							cd $(dirname $0)/extra/saucelabs
+							npm install wd || exit 1
+							cd "$CURDIR"
+							retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
+							node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
+						fi
 						;;
 					* )
 						;;
 				esac
 				;;
-			swf | flash | swf9 | swf8 | flash8 | flash9 )
-				;;
-			as3 )
+			swf | flash | swf9 | swf8 | flash8 | flash9 | as3 )
+				if [ $CURTARGET = "as3" ]; then
+					# compile as3
+					[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/as3"
+					PATH=$PATH:$HOME/flex_sdk_4
+					mxmlc -static-link-runtime-shared-libraries=true -debug $BUILTFILE/__main__.as --output "$TARGET_DIR/as3.swf"
+					BUILTFILE="$TARGET_DIR/as3.swf"
+				fi
+				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/$CURTARGET.swf"
+				echo "ErrorReportingEnable=1\nTraceOutputFileEnable=1" > $HOME/mm.cfg
+				if [ $OS = "linux" ]; then
+					export DISPLAY=:99.0
+					export AUDIODEV=null
+					# sh -e /etc/init.d/xvfb start
+					FLASHLOGPATH=$HOME/.macromedia/Flash_Player/Logs/flashlog.txt
+				else
+					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
+				fi
+				runflash "$BUILTFILE" &
+				for i in 0 1 2 3 4; do
+					sleep 2
+					if [ -f "$FLASHLOGPATH" ]; then
+						break
+					fi
+				done
+				if [ ! -f "$FLASHLOGPATH" ]; then
+					echo "$FLASHLOGPATH not found"
+					exit 1
+				fi
+				tail -f -v "$FLASHLOGPATH" & 
+				evaltest tail -f -v "$FLASHLOGPATH" || exit 1
 				;;
 			neko )
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/neko.n"

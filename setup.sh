@@ -94,7 +94,8 @@ for i in "${!SETUP[@]}"; do
 				retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.min.tar.xz
 				# retry wget http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/flashplayer_11_sa_debug.i386.tar.gz
 				# retry wget http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/flashplayer_11_sa_debug.i386.tar.gz
-				install libgd2-xpm ; install ia32-libs ; install ia32-libs-multiarch ; install libgtk2.0-0:i386 ; install libxt6:i386 ; install libnss3:i386
+				# install libgd2-xpm ; install ia32-libs ; install ia32-libs-multiarch ; 
+				install libgtk2.0-0:i386 ; install libxt6:i386 ; install libnss3:i386
 				[ -f /etc/init.d/xvfb ] || install xvfb
 				# retry sudo apt-get install -qq -y libgd2-xpm ia32-libs ia32-libs-multiarch
 				tar -xf flashplayer* -C ~/
@@ -119,7 +120,7 @@ for i in "${!SETUP[@]}"; do
 		js )
 			for j in "${!TOOLCHAIN[@]}"; do
 				if [ ${TOOLCHAIN[j]} = "default" ] || [ ${TOOLCHAIN[j]} = "nodejs" ]; then
-					testprg nodejs -v || testprog node -v || install nodejs node
+					testprog nodejs -v || testprog node -v || install nodejs node
 					testprog nodejs -v || testprog node -v || exit 1
 				elif [ ${TOOLCHAIN[j]} = "browser" ]; then
 					testprog phantomjs -v || install phantomjs

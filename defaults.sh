@@ -43,15 +43,16 @@ function retry {
 FIRST=0
 
 function install {
+	echo "installing $1"
 	if [ $OS = "linux" ]; then
 		if [ $FIRST -eq 0 ]; then
 			retry sudo apt-get update -qq
 			FIRST=1
 		fi
 		if [ $ARCH = "i686" ] && [[ ! $1 == *:i386 ]]; then
-			retry sudo apt-get install -qq -y $1:i386 2> /dev/null
+			retry sudo apt-get install -y $1:i386 2> /dev/null
 		else
-			retry sudo apt-get install -qq -y $1 2> /dev/null
+			retry sudo apt-get install -y $1 2> /dev/null
 		fi
 	else
 		if [ $FIRST -eq 0 ]; then
@@ -70,7 +71,15 @@ function runflash {
 	if [ $OS = "mac" ]; then
 		"~/flashplayer.app/Contents/MacOS/Flash Player Debugger" "$@"
 	else
-		~/flashplayerdebugger "$@"
+		xvfb-run ~/flashplayerdebugger "$@"
+	fi
+}
+
+function evaltest {
+	if [[ $EVAL_TEST_CMD && ${EVAL_TEST_CMD-x} ]]; then
+		"$@" | $EVAL_TEST_CMD
+	else
+		"$@" | neko $(dirname $0)/extra/evaluate-test/evaluate-test.n
 	fi
 }
 
