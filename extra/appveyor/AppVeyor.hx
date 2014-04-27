@@ -41,12 +41,21 @@ class AppVeyor
 		var toolkit = "C:\\HaxeToolkit";
 		createDirectory('C:\\HaxeToolkit');
 		// download neko
-		//todo
+		download('http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/neko-latest-win.tar.gz', '$toolkit/neko.tar.gz');
+		untar('$toolkit/neko.tar.gz', '$toolkit');
+		for (file in readDirectory(toolkit))
+		{
+			if (file.startsWith('neko') && isDirectory('$toolkit/$file'))
+			{
+				rename('$toolkit/$file', '$toolkit/neko');
+				break;
+			}
+		}
+
 		// download haxe
 		trace('download haxe');
 		download('http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/windows/haxe_latest.tar.gz', '$toolkit/haxe.tar.gz');
 		untar('$toolkit/haxe.tar.gz', '$toolkit');
-		trace(readDirectory('$toolkit'));
 		for (file in readDirectory(toolkit))
 		{
 			if (file.startsWith('haxe') && isDirectory('$toolkit/$file'))
@@ -55,18 +64,14 @@ class AppVeyor
 				break;
 			}
 		}
-		trace(readDirectory('$toolkit'));
-		trace(readDirectory('$toolkit/haxe'));
-		trace(Sys.environment());
 
 		trace('setup haxelib');
 		// setup haxelib
 		createDirectory('$home/haxelib');
 		cmd('haxelib',['setup','$home/haxelib']);
-		cmd('haxelib',['list']);
-		trace("test haxelib");
 
 		cmd('haxe',[]); //check if it's installed correctly
+		cmd('neko',['-version']);
 		trace('configuring target');
 		for (target in Sys.getEnv("TARGET").split(" "))
 		{

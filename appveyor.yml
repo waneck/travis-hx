@@ -1,11 +1,15 @@
 clone_folder: c:\projects\travis-hx
 
+environment:
+  matrix:
+    - TARGET: neko
+    - TARGET: cpp
+    - TARGET: cs
+    - TARGET: java
+
 install:
   - echo starting
-  - dir
   - extra\appveyor\AppVeyor.exe setup
-  - dir C:
-  - dir C:\HaxeToolkit
 
 build_script:
   - C:\HaxeToolkit\haxe\haxe
