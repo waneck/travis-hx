@@ -74,6 +74,10 @@ for i in "${!TARGET[@]}"; do
 					echo "waiting for $FLASHLOGPATH"
 				done
 				if [ ! -f "$FLASHLOGPATH" ]; then
+					ls -al ~
+					ls -al $HOME
+					ls -al ~/.macromedia/Flash_Player
+					ls -al ~/.macromedia/Flash_Player/Logs
 					echo "$FLASHLOGPATH not found"
 					exit 1
 				fi
