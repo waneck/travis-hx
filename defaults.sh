@@ -43,6 +43,7 @@ function retry {
 FIRST=0
 
 function install {
+	echo "installing $1"
 	if [ $OS = "linux" ]; then
 		if [ $FIRST -eq 0 ]; then
 			retry sudo apt-get update -qq
