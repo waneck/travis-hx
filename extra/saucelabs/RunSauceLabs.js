@@ -75,9 +75,9 @@ RunSauceLabs.main = function() {
 							js.Node.console.log(re);
 							var test = false;
 							var prog;
-							if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD").split(" "); else prog = ["neko",js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n")];
-							js.Node.console.log("getting response from ",prog.join(" "));
-							var child = js.Node.require("child_process").exec(prog[0],prog.slice(1),function(code,stdout,stderr) {
+							if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD"); else prog = "neko " + js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n");
+							js.Node.console.log("getting response from ",prog);
+							var child = js.Node.require("child_process").exec(prog,null,function(code,stdout,stderr) {
 								test = code.code == 0;
 								js.Node.console.log("passed: " + (test == null?"null":"" + test) + " (" + code.code + ") ");
 								success = success && test;

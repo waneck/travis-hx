@@ -65,13 +65,13 @@ class RunSauceLabs {
 								var test = false;
 								var prog = if (Sys.getEnv("EVAL_TEST_CMD") != null)
 								{
-									Sys.getEnv("EVAL_TEST_CMD").split(" ");
+									Sys.getEnv("EVAL_TEST_CMD");
 								} else {
-									['neko', path.resolve(untyped __dirname, '../evaluate-test/evaluate-test.n')];
+									'neko ' + path.resolve(untyped __dirname, '../evaluate-test/evaluate-test.n');
 								};
-								console.log("getting response from ", prog.join(" "));
+								console.log("getting response from ", prog);
 
-								var child = child_process.exec(prog[0], prog.slice(1), function(code,stdout,stderr) {
+								var child = child_process.exec(prog, null, function(code,stdout,stderr) {
 									test = code.code == 0;
 									console.log("passed: " + test +" (" + code.code + ") ");
 									success = success && test;
