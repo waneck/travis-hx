@@ -76,12 +76,10 @@ function runflash {
 	fi
 }
 
+[[ $EVAL_TEST_CMD && ${EVAL_TEST_CMD-x} ]] || EVAL_TEST_CMD="neko $(dirname $0)/extra/evaluate-test/evaluate-test.n"
+	
 function evaltest {
-	if [[ $EVAL_TEST_CMD && ${EVAL_TEST_CMD-x} ]]; then
-		"$@" | $EVAL_TEST_CMD
-	else
-		"$@" | neko $(dirname $0)/extra/evaluate-test/evaluate-test.n
-	fi
+	"$@" | $EVAL_TEST_CMD
 }
 
 PATH=$PATH:$HOME/flex_sdk_4/bin

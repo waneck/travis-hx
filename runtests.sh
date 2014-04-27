@@ -79,7 +79,9 @@ for i in "${!TARGET[@]}"; do
 					exit 1
 				fi
 				echo "checking contents"
-				evaltest tail -f "$FLASHLOGPATH" || exit 1
+
+				$EVAL_TEST_CMD < "$FLASHLOGPATH" || exit 1
+				# evaltest tail -f "$FLASHLOGPATH" || exit 1
 				;;
 			neko )
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/neko.n"
