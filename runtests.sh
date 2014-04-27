@@ -80,7 +80,9 @@ for i in "${!TARGET[@]}"; do
 				fi
 				echo "checking contents"
 
-				$EVAL_TEST_CMD < "$FLASHLOGPATH" || exit 1
+				mkfifo /tmp/flash-fifo
+				tail -f "$FLASHLOGPATH" > /tmp/flash-fifo &
+				$EVAL_TEST_CMD < /tmp/flash-fifo || exit 1
 				# evaltest tail -f "$FLASHLOGPATH" || exit 1
 				;;
 			neko )
