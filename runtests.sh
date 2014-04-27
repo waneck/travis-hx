@@ -61,6 +61,7 @@ for i in "${!TARGET[@]}"; do
 				else
 					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
 				fi
+				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
 				for i in 0 1 2 3 4; do
 					sleep 2
