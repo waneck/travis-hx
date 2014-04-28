@@ -85,7 +85,7 @@ class AppVeyor
 						{
 							if (file.endsWith('.exe'))
 							{
-								cmd('$built/$file',[]);
+								cmd('$built/$file',null);
 								break;
 							}
 						}

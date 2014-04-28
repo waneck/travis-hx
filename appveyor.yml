@@ -10,10 +10,10 @@ environment:
     - TARGET: js
       NODECMD: "var unit = require('./unit.js').unit; unit.Test.main(); if (unit. Test.success) process.exit(0); else process.exit(1);"
 
-matrix:
-  allow_failures:
-    - TARGET: neko
-      FILENAME: unit.n
+# matrix:
+#   allow_failures:
+#     - TARGET: neko
+#       FILENAME: unit.n
 
 install:
   - echo starting
