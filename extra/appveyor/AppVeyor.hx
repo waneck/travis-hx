@@ -212,8 +212,8 @@ class AppVeyor
 
 		trace('setup haxelib');
 		// setup haxelib
-		createDirectory('$home/haxelib');
-		cmd('haxelib',['setup','$home/haxelib']);
+		createDirectory('$toolkit/haxe/lib');
+		cmd('haxelib',['setup','$toolkit/haxe/lib']);
 
 		cmd('haxe',[]); //check if it's installed correctly
 		cmd('neko',['-version']);
@@ -277,7 +277,7 @@ class AppVeyor
 
 	static function cmd(cmd:String,args:Array<String>,retry=0,throwOnError=true)
 	{
-		trace('[$retry,$throwOnError]',cmd,args.join(" "));
+		trace('[$retry,$throwOnError]',cmd,args == null ? "" :args.join(" "));
 		if (cmd.startsWith('haxe'))
 		{
 			cmd = 'C:\\HaxeToolkit\\haxe\\' + cmd;
