@@ -5,7 +5,12 @@
 Helpers (and wikis) to easily test haxe code on travis. These scripts are an abstraction from @andyli's work on getting Travis to work with all Haxe targets
 
 ## Quickstart
+
+### Travis
 Copy `travis-example.yml` to your project as `.travis.yml`, customize as needed.
+
+### Appveyor
+Copy `appveyor-example.yml` to your project as `appveyor.yml`, customize as needed.
 
 ## Environment variables
 The following environment variables are sensitive by the script runtime:
@@ -28,6 +33,7 @@ Defines the OS and architecture to be used as test. The following combinations m
 | x86_64* | Mac      | 64-bit           | all; flash is always 32-bit
 | i686    | Linux    | 32-bit           | haxe, neko, js (node and phantomjs), php
 | i686    | Mac      | 32-bit           | none
+| i686    | Windows  | 32-bit (AppVeyor)| haxe, neko, cpp, java, cs, js (node only)
 
 ### TOOLCHAIN
 If applicable, specifies a custom toolchain to be used for building / running. Default is always `default`
