@@ -8,6 +8,11 @@ environment:
     - TARGET: cs
     - TARGET: java
 
+matrix:
+  allow_failures:
+    environment:
+      - TARGET: neko
+
 install:
   - echo starting
   - mkdir C:\travis-hx
