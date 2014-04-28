@@ -14,6 +14,6 @@ install:
 build_script:
   - extra\appveyor\AppVeyor.exe retry git clone https://github.com/HaxeFoundation/haxe.git C:\haxegit
   - cd C:\haxegit\tests\unit
-  - haxe compile-%TARGET%.hxml -D fdb
-  # - %APPVEYOR_BUILD_FOLDER%\extra\appveyour\AppVeyor.exe test
+  - %APPVEYOR_BUILD_FOLDER%\extra\appveyor\AppVeyor.exe run haxe compile-%TARGET%.hxml -D fdb
+  # - %APPVEYOR_BUILD_FOLDER%\extra\appveyor\AppVeyor.exe test
   # - extra\appveyor\AppVeyor.exe build

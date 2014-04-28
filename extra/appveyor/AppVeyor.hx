@@ -159,6 +159,7 @@ class AppVeyor
 
 	static function download(url:String,target:String,?retry=3)
 	{
+		trace('[$retry]','download',url,target);
 		do
 		{
 			var req = new haxe.Http(url);
