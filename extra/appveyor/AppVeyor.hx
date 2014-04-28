@@ -156,33 +156,13 @@ class AppVeyor
 
 	static function setupHxcpp()
 	{
-		var home = Sys.getEnv("HOME");
-		if (home == null)
-		{
-			home = Sys.getEnv("HOMEPATH");
-		}
-		if (home == null)
-		{
-			trace('home is still null');
-			home = 'C:\\HaxeToolkit';
-		}
 		cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
-		cd('$home/haxelib/hxcpp/git/project');
+		cd('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\project');
 		cmd('neko', ['build.n']);
 	}
 
 	static function setup()
 	{
-		var home = Sys.getEnv("HOME");
-		if (home == null)
-		{
-			home = Sys.getEnv("HOMEPATH");
-		}
-		if (home == null)
-		{
-			trace('home is still null');
-			home = 'C:\\HaxeToolkit';
-		}
 		var toolkit = "C:\\HaxeToolkit";
 		createDirectory('C:\\HaxeToolkit');
 		// download neko
