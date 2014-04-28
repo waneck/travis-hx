@@ -9,11 +9,13 @@ environment:
 
 install:
   - echo starting
-  - extra\appveyor\AppVeyor.exe setup
+  - mkdir C:\travis-hx
+  - copy extra\appveyor\AppVeyor.exe C:\travis-hx
+  - C:\travis-hx\AppVeyor.exe setup
 
 build_script:
-  - extra\appveyor\AppVeyor.exe retry git clone https://github.com/HaxeFoundation/haxe.git C:\haxegit
+  - C:\travis-hx\AppVeyor.exe retry git clone https://github.com/HaxeFoundation/haxe.git C:\haxegit
   - cd C:\haxegit\tests\unit
-  - %APPVEYOR_BUILD_FOLDER%\extra\appveyor\AppVeyor.exe run haxe compile-%TARGET%.hxml -D fdb
+  - C:\travis-hx\AppVeyor.exe run haxe compile-%TARGET%.hxml -D fdb
   # - %APPVEYOR_BUILD_FOLDER%\extra\appveyor\AppVeyor.exe test
   # - extra\appveyor\AppVeyor.exe build
