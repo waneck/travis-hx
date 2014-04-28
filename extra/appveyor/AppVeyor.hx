@@ -22,6 +22,74 @@ class AppVeyor
 		{
 			case 'setup':
 				setup();
+			case 'build':
+				build();
+			case 'hxcpp':
+				var home = Sys.getEnv("HOME");
+				if (home == null)
+				{
+					home = Sys.getEnv("HOMEPATH");
+				}
+				if (home == null)
+				{
+					trace('home is still null');
+					home = 'C:\\HaxeToolkit';
+				}
+				cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
+				cd('$home/haxelib/hxcpp/git/project');
+				cmd('neko', ['build.n']);
+			case 'run':
+				var args = Sys.args();
+				args.shift();
+				var c = args.shift();
+				cmd(c,args);
+			case 'retry':
+				var args = Sys.args();
+				args.shift();
+				var c = args.shift();
+				cmd(c,args,3);
+			case 'test':
+		}
+	}
+
+	static function build()
+	{
+		var flags = Sys.getEnv("HXFLAGS");
+		if (flags == null)
+			flags = "";
+		var extra = Sys.getEnv("HXFLAGS_EXTRA");
+		if (extra == null)
+			extra = "";
+		else
+			extra = " " + extra;
+		flags += extra;
+
+		var flags = flags.split(' ');
+		var targetDir = Sys.getEnv("TARGET_DIR");
+		if (targetDir == null)
+			targetDir = ".";
+		for (target in Sys.getEnv("TARGET").split(" "))
+		{
+			var extra = Sys.getEnv("HXFLAGS_EXTRA");
+			if (extra == null)
+				extra = switch target
+				{
+					case 'neko':
+						'-neko $targetDir/neko.n';
+					case 'js':
+						'-js $targetDir/js.js';
+					case 'cpp' | 'java' | 'cs':
+						'-$target $targetDir/$target';
+					case 'interp':
+						'--interp';
+					case 'macro':
+						Sys.getEnv("MACROFLAGS") == null ? "" : Sys.getEnv("MACROFLAGS");
+					case _:
+						trace("unkown target ", target);
+						null;
+				};
+			if (extra != null)
+				cmd('haxe',flags.concat(extra.split(' ')));
 		}
 	}
 
@@ -30,7 +98,6 @@ class AppVeyor
 		var home = Sys.getEnv("HOME");
 		if (home == null)
 		{
-			trace('home is null');
 			home = Sys.getEnv("HOMEPATH");
 		}
 		if (home == null)
@@ -85,7 +152,7 @@ class AppVeyor
 					cmd('haxelib', ['git','hxcs','https://github.com/HaxeFoundation/hxcs'],3);
 				case 'java':
 					cmd('haxelib', ['git','hxjava','https://github.com/HaxeFoundation/hxjava'],3);
-					cmd('javac',['--version']);
+					cmd('javac',['-version']);
 			}
 		}
 	}
@@ -107,6 +174,7 @@ class AppVeyor
 
 	static function untar(filename:String, target:String)
 	{
+		trace('untar',filename,target);
 		var file = sys.io.File.read(filename);
 		var gz = new format.gz.Reader(file);
 		var out = new BytesOutput();
@@ -116,7 +184,7 @@ class AppVeyor
 		for (entry in tar.read())
 		{
 			createDirectory(target + '/' + Path.directory(entry.fileName));
-			trace(entry.fileName,entry.data.length,entry.fileSize);
+			// trace(entry.fileName,entry.data.length,entry.fileSize);
 			if (entry.data != null && entry.data.length > 0 && entry.fileSize > 0)
 			{
 				File.saveBytes( target + '/' + entry.fileName, entry.data );
@@ -126,11 +194,13 @@ class AppVeyor
 
 	static function cd(dir:String)
 	{
+		trace('cd',dir);
 		Sys.setCwd(dir);
 	}
 
 	static function cmd(cmd:String,args:Array<String>,retry=0,throwOnError=true)
 	{
+		trace('[$retry,$throwOnError]',cmd,args.join(" "));
 		if (cmd.startsWith('haxe'))
 		{
 			cmd = 'C:\\HaxeToolkit\\haxe\\' + cmd;
