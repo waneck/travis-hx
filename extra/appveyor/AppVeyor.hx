@@ -74,7 +74,7 @@ class AppVeyor
 						{
 							if (file.endsWith('.exe'))
 							{
-								cmd('$built/file',[]);
+								cmd('$built/$file',[]);
 								break;
 							}
 						}
@@ -90,13 +90,13 @@ class AppVeyor
 						{
 							if (file.endsWith('.jar'))
 							{
-								cmd('java',['-jar','$built/file']);
+								cmd('java',['-jar','$built/$file']);
 								break;
 							}
 						}
 						continue;
 					}
-					cmd('java',['-jar','$built/file']);
+					cmd('java',['-jar','$built']);
 				case 'interp' | 'macro': // do nothing, already tested when building
 			}
 		}
