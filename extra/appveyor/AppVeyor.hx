@@ -46,6 +46,17 @@ class AppVeyor
 		var targetDir = Sys.getEnv("TARGET_DIR");
 		if (targetDir == null)
 			targetDir = Sys.getCwd();
+		while (true)
+		{
+			switch (targetDir.charAt(targetDir.length-1))
+			{
+				case '/' | '\\':
+					targetDir = targetDir.substr(0,targetDir.length-1);
+				default:
+					break;
+			}
+		}
+
 		var built = Sys.args()[1];
 		if (built == '' || built.trim() == '') built = null;
 		for (target in Sys.getEnv("TARGET").split(" "))
