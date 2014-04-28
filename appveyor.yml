@@ -3,6 +3,7 @@ clone_folder: c:\projects\travis-hx
 environment:
   matrix:
     - TARGET: neko
+      FILENAME: unit.n
     - TARGET: cpp
     - TARGET: cs
     - TARGET: java
