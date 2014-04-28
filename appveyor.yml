@@ -12,6 +12,7 @@ matrix:
   allow_failures:
     - environment:
       TARGET: neko
+      FILENAME: unit.n
 
 install:
   - echo starting
