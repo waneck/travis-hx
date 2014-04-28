@@ -25,19 +25,7 @@ class AppVeyor
 			case 'build':
 				build();
 			case 'hxcpp':
-				var home = Sys.getEnv("HOME");
-				if (home == null)
-				{
-					home = Sys.getEnv("HOMEPATH");
-				}
-				if (home == null)
-				{
-					trace('home is still null');
-					home = 'C:\\HaxeToolkit';
-				}
-				cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
-				cd('$home/haxelib/hxcpp/git/project');
-				cmd('neko', ['build.n']);
+				setupHxcpp();
 			case 'run':
 				var args = Sys.args();
 				args.shift();
@@ -49,6 +37,68 @@ class AppVeyor
 				var c = args.shift();
 				cmd(c,args,3);
 			case 'test':
+				test();
+		}
+	}
+
+	static function test()
+	{
+		var targetDir = Sys.getEnv("TARGET_DIR");
+		if (targetDir == null)
+			targetDir = ".";
+		var built = Sys.args()[1];
+		if (built == '' || built.trim() == '') built = null;
+		for (target in Sys.getEnv("TARGET").split(" "))
+		{
+			switch target
+			{
+				case 'js':
+					var built = built;
+					if (built == null) built = '$targetDir/js.js';
+					if (Sys.getEnv("NODECMD") != null)
+					{
+						cmd('node',['-e',Sys.getEnv("NODECMD")]);
+					} else {
+						cmd('node',[built]);
+					}
+				case 'neko':
+					var built = built;
+					if (built == null) built = '$targetDir/neko.n';
+					cmd('neko',[built]);
+				case 'cpp' | 'cs':
+					var built = built;
+					if (built == null) built = '$targetDir/$target';
+					if (isDirectory(built))
+					{
+						for (file in readDirectory(built))
+						{
+							if (file.endsWith('.exe'))
+							{
+								cmd('$built/file',[]);
+								break;
+							}
+						}
+						continue;
+					}
+					cmd(built,[]);
+				case 'java':
+					var built = built;
+					if (built == null) built = '$targetDir/java';
+					if (isDirectory(built))
+					{
+						for (file in readDirectory(built))
+						{
+							if (file.endsWith('.jar'))
+							{
+								cmd('java',['-jar','$built/file']);
+								break;
+							}
+						}
+						continue;
+					}
+					cmd('java',['-jar','$built/file']);
+				case 'interp' | 'macro': // do nothing, already tested when building
+			}
 		}
 	}
 
@@ -91,6 +141,23 @@ class AppVeyor
 			if (extra != null)
 				cmd('haxe',flags.concat(extra.split(' ')));
 		}
+	}
+
+	static function setupHxcpp()
+	{
+		var home = Sys.getEnv("HOME");
+		if (home == null)
+		{
+			home = Sys.getEnv("HOMEPATH");
+		}
+		if (home == null)
+		{
+			trace('home is still null');
+			home = 'C:\\HaxeToolkit';
+		}
+		cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
+		cd('$home/haxelib/hxcpp/git/project');
+		cmd('neko', ['build.n']);
 	}
 
 	static function setup()
@@ -145,9 +212,7 @@ class AppVeyor
 			switch target
 			{
 				case 'cpp':
-					cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
-					cd('$home/haxelib/hxcpp/git/project');
-					cmd('neko', ['build.n']);
+					setupHxcpp();
 				case 'cs':
 					cmd('haxelib', ['git','hxcs','https://github.com/HaxeFoundation/hxcs'],3);
 				case 'java':

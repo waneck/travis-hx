@@ -17,5 +17,6 @@ build_script:
   - C:\travis-hx\AppVeyor.exe retry git clone https://github.com/HaxeFoundation/haxe.git C:\haxegit
   - cd C:\haxegit\tests\unit
   - C:\travis-hx\AppVeyor.exe run haxe compile-%TARGET%.hxml -D fdb
+  - C:\travis-hx\AppVeyor.exe test %FILENAME%
   # - %APPVEYOR_BUILD_FOLDER%\extra\appveyor\AppVeyor.exe test
   # - extra\appveyor\AppVeyor.exe build
