@@ -10,8 +10,8 @@ environment:
 
 matrix:
   allow_failures:
-    environment:
-      - TARGET: neko
+    - environment:
+      TARGET: neko
 
 install:
   - echo starting
