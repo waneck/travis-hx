@@ -77,6 +77,10 @@ for i in "${!SETUP[@]}"; do
 			retry haxelib git hxjava https://github.com/HaxeFoundation/hxjava
 			javac -version || exit 1
 			;;
+		python )
+			testprog python3 --version || install python3 || exit 1
+			python3 --version || exit 1
+			;;
 		cs )
 			testprog mcs --version || install mono-mcs mono || sudo apt-get install -y mono-mcs || exit 1
 			retry haxelib git hxcs https://github.com/HaxeFoundation/hxcs
