@@ -12,6 +12,7 @@ environment:
     - TARGET: python
       FILENAME: unit.py
       PYTHONCMD: python
+      PYTHON: C:\python34
 
 # matrix:
 #   allow_failures:
