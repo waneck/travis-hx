@@ -11,8 +11,7 @@ environment:
       NODECMD: "var unit = require('./unit.js').unit; unit.Test.main(); if (unit. Test.success) process.exit(0); else process.exit(1);"
     - TARGET: python
       FILENAME: unit.py
-      PYTHONCMD: python
-      PYTHON: C:\python34
+      PYTHONCMD: C:\python34\python
 
 # matrix:
 #   allow_failures:
