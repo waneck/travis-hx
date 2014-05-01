@@ -50,6 +50,11 @@ for i in "${!TARGET[@]}"; do
 				HX=$HXFLAGS $HXFLAGS_EXTRA
 				haxe $HX || exit 1
 				;;
+			python )
+				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-python \"$TARGET_DIR/python.py\""
+				HX=$HXFLAGS $HXFLAGS_EXTRA
+				haxe $HX || exit 1
+				;;
 			interp )
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="--interp"
 				HX=$HXFLAGS $HXFLAGS_EXTRA

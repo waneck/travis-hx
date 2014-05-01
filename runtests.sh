@@ -93,6 +93,10 @@ for i in "${!TARGET[@]}"; do
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/php/index.php"
 				php "$BUILTFILE" || exit 1
 				;;
+			python )
+				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/python.py"
+				python3 "$BUILTFILE" || exit 1
+				;;
 			cpp )
 				if [ -z $BUILTFILE ]; then
 					# get first executable at directory

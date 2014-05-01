@@ -17,6 +17,7 @@ env:
     - TARGET=java
     - TARGET=cs
     - TARGET=flash8 FILENAME=unit8.swf
+    - TARGET=python FILENAME=unit.py
 
 matrix:
   fast_finish: true
