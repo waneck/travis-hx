@@ -17,6 +17,9 @@ environment:
     # optional: FILENAME
     - TARGET: java
     # optional: FILENAME
+    - TARGET: python
+    # optional: FILENAME
+    # optional: PYTHONCMD
 
 matrix:
   allow_failures:

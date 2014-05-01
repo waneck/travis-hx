@@ -76,6 +76,13 @@ class AppVeyor
 					var built = built;
 					if (built == null) built = '$targetDir/neko.n';
 					cmd('neko',[built]);
+				case 'python':
+					var built = built;
+					if (built == null) built = '$targetDir/python.py';
+					var pcmd = Sys.getEnv("PYTHONCMD");
+					if (pcmd == null)
+						pcmd = "python3";
+					cmd(pcmd,[built]);
 				case 'cpp' | 'cs':
 					var built = built;
 					if (built == null) built = '$targetDir/$target';
@@ -137,6 +144,8 @@ class AppVeyor
 				{
 					case 'neko':
 						'-neko $targetDir/neko.n';
+					case 'python':
+						'-python $targetDir/python.py';
 					case 'js':
 						'-js $targetDir/js.js';
 					case 'cpp' | 'java' | 'cs':

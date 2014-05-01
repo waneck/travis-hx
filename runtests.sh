@@ -95,7 +95,8 @@ for i in "${!TARGET[@]}"; do
 				;;
 			python )
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/python.py"
-				python3 "$BUILTFILE" || exit 1
+				[ ! -z $PYTHONCMD ] || PYTHONCMD=python3
+				$PYTHONCMD "$BUILTFILE" || exit 1
 				;;
 			cpp )
 				if [ -z $BUILTFILE ]; then

@@ -35,6 +35,9 @@ env:
       # optional: FILENAME
     - TARGET=swf8
       # optional: FILENAME
+    - TARGET=python
+      # optional: FILENAME
+      # optional: PYTHONCMD
 
 matrix:
   fast_finish: true

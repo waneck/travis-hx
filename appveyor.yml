@@ -9,6 +9,8 @@ environment:
     - TARGET: java
     - TARGET: js
       NODECMD: "var unit = require('./unit.js').unit; unit.Test.main(); if (unit. Test.success) process.exit(0); else process.exit(1);"
+    - TARGET: python
+      FILENAME: unit.py
 
 # matrix:
 #   allow_failures:
