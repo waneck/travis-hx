@@ -50,16 +50,16 @@ function install {
 			FIRST=1
 		fi
 		if [ $ARCH = "i686" ] && [[ ! $1 == *:i386 ]]; then
-			retry sudo apt-get install -y $1:i386 2> /dev/null
+			retry sudo apt-get install -y $1:i386 > /dev/null 2> /dev/null
 		else
-			retry sudo apt-get install -y $1 2> /dev/null
+			retry sudo apt-get install -y $1 > /dev/null 2> /dev/null
 		fi
 	else
 		if [ $FIRST -eq 0 ]; then
-			brew update 2> /dev/null
+			brew update 2> /dev/null > /dev/null
 			FIRST=1
 		fi
-		[[ $2 && ${2-x} ]] && retry brew install $2 2> /dev/null || retry brew install $1 2> /dev/null
+		[[ $2 && ${2-x} ]] && retry brew install $2 > /dev/null 2> /dev/null || retry brew install $1 > /dev/null 2> /dev/null
 	fi
 }
 
