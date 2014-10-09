@@ -23,6 +23,7 @@ class EvalTest
 					explicitFailed = true;
 				} else if (line.indexOf("all tests ok") >= 0) {
 					explicitOk = true;
+					Sys.exit(0);
 				} else if (line.indexOf('too many errors') >= 0) {
 					Sys.exit(1);
 				}
