@@ -70,30 +70,53 @@ RunSauceLabs.main = function() {
 					if(!handleError(err1,{ fileName : "RunSauceLabs.hx", lineNumber : 57, className : "RunSauceLabs", methodName : "main"})) return;
 					browser.get("http://localhost:2000/unit-js.html",function(err2) {
 						if(!handleError(err2,{ fileName : "RunSauceLabs.hx", lineNumber : 59, className : "RunSauceLabs", methodName : "main"})) return;
-						browser.text("body",function(err3,re) {
-							if(!handleError(err3,{ fileName : "RunSauceLabs.hx", lineNumber : 61, className : "RunSauceLabs", methodName : "main"})) return;
-							js.Node.console.log(re);
-							var test = false;
-							var prog;
-							if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD"); else prog = "neko " + js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n");
-							js.Node.console.log("getting response from ",prog);
-							var child = js.Node.require("child_process").exec(prog,null,function(code,stdout,stderr) {
-								js.Node.console.log(stderr);
-								test = code == null || code.code == 0;
-								js.Node.console.log("passed: " + (test == null?"null":"" + test));
-								success = success && test;
-								browser.sauceJobUpdate({ passed : test},function(err4) {
-									if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 82, className : "RunSauceLabs", methodName : "main"})) return;
-									browser.quit(function(err5) {
-										if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 84, className : "RunSauceLabs", methodName : "main"})) return;
-										testBrowsers1(browsers1);
+						var delay = 200;
+						var retries1 = 100;
+						var poll;
+						var poll1 = null;
+						poll1 = function() {
+							browser.text("body",function(err3,re) {
+								if(!handleError(err3,{ fileName : "RunSauceLabs.hx", lineNumber : 64, className : "RunSauceLabs", methodName : "main"})) return;
+								re = StringTools.trim(StringTools.replace(re,"\\n","\n"));
+								if(re == "") {
+									if(--retries1 == 0) {
+										browser.sauceJobUpdate({ passed : false},function(err4) {
+											if(!handleError(err4,{ fileName : "RunSauceLabs.hx", lineNumber : 70, className : "RunSauceLabs", methodName : "main"})) return;
+											browser.quit(function(err5) {
+												if(!handleError(err5,{ fileName : "RunSauceLabs.hx", lineNumber : 72, className : "RunSauceLabs", methodName : "main"})) return;
+												testBrowsers1(browsers1);
+											});
+										});
+										return;
+									}
+									haxe.Timer.delay(poll1,delay);
+									return;
+								}
+								js.Node.console.log(re);
+								var test = false;
+								var prog;
+								if(Sys.getEnv("EVAL_TEST_CMD") != null) prog = Sys.getEnv("EVAL_TEST_CMD"); else prog = "neko " + js.Node.require("path").resolve(__dirname,"../evaluate-test/evaluate-test.n");
+								js.Node.console.log("getting response from ",prog);
+								var child = js.Node.require("child_process").exec(prog,null,function(code,stdout,stderr) {
+									js.Node.console.log(stderr);
+									test = code == null || code.code == 0;
+									js.Node.console.log("passed: " + (test == null?"null":"" + test));
+									success = success && test;
+									browser.sauceJobUpdate({ passed : test},function(err6) {
+										if(!handleError(err6,{ fileName : "RunSauceLabs.hx", lineNumber : 102, className : "RunSauceLabs", methodName : "main"})) return;
+										browser.quit(function(err7) {
+											if(!handleError(err7,{ fileName : "RunSauceLabs.hx", lineNumber : 104, className : "RunSauceLabs", methodName : "main"})) return;
+											testBrowsers1(browsers1);
+										});
 									});
 								});
+								child.stdout.pipe(js.Node.process.stdout);
+								child.stdin.write(re);
+								child.stdin.end();
 							});
-							child.stdout.pipe(js.Node.process.stdout);
-							child.stdin.write(re);
-							child.stdin.end();
-						});
+						};
+						poll = poll1;
+						poll();
 					});
 				});
 			};
@@ -126,6 +149,30 @@ var StringBuf = function() {
 	this.b = "";
 };
 StringBuf.__name__ = true;
+var StringTools = function() { };
+StringTools.__name__ = true;
+StringTools.isSpace = function(s,pos) {
+	var c = HxOverrides.cca(s,pos);
+	return c > 8 && c < 14 || c == 32;
+};
+StringTools.ltrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,r)) r++;
+	if(r > 0) return HxOverrides.substr(s,r,l - r); else return s;
+};
+StringTools.rtrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,l - r - 1)) r++;
+	if(r > 0) return HxOverrides.substr(s,0,l - r); else return s;
+};
+StringTools.trim = function(s) {
+	return StringTools.ltrim(StringTools.rtrim(s));
+};
+StringTools.replace = function(s,sub,by) {
+	return s.split(sub).join(by);
+};
 var Sys = function() { };
 Sys.__name__ = true;
 Sys.args = function() {
@@ -151,6 +198,30 @@ haxe.Json.stringify = function(obj,replacer,insertion) {
 };
 haxe.Json.parse = function(jsonString) {
 	return JSON.parse(jsonString);
+};
+haxe.Timer = function(time_ms) {
+	var me = this;
+	this.id = setInterval(function() {
+		me.run();
+	},time_ms);
+};
+haxe.Timer.__name__ = true;
+haxe.Timer.delay = function(f,time_ms) {
+	var t = new haxe.Timer(time_ms);
+	t.run = function() {
+		t.stop();
+		f();
+	};
+	return t;
+};
+haxe.Timer.prototype = {
+	stop: function() {
+		if(this.id == null) return;
+		clearInterval(this.id);
+		this.id = null;
+	}
+	,run: function() {
+	}
 };
 haxe.ds = {};
 haxe.ds.StringMap = function() { };

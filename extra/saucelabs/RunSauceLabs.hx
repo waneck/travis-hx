@@ -57,39 +57,62 @@ class RunSauceLabs {
 						if (!handleError(err)) return;
 						browser.get("http://localhost:2000/unit-js.html", function(err) {
 							if (!handleError(err)) return;
-							browser.text("body", function(err, re) {
-								if (!handleError(err)) return;
-								console.log(re);
+							var delay = 200,
+									retries = 100;
+							function poll() {
+								browser.text("body", function(err, re) {
+									if (!handleError(err)) return;
+									re = StringTools.trim(StringTools.replace(re, "\\n", "\n"));
 
-								//check if test is successful or not
-								var test = false;
-								var prog = if (Sys.getEnv("EVAL_TEST_CMD") != null)
-								{
-									Sys.getEnv("EVAL_TEST_CMD");
-								} else {
-									'neko ' + path.resolve(untyped __dirname, '../evaluate-test/evaluate-test.n');
-								};
-								console.log("getting response from ", prog);
+									if(re == '') {
+										if(--retries == 0) {
+											browser.sauceJobUpdate({ passed: false }, function(err) {
+												if (!handleError(err)) return;
+												browser.quit(function(err) {
+													if (!handleError(err)) return;
+													testBrowsers(browsers);
+												});
+											});
+											return;
+										}
+										haxe.Timer.delay(poll, delay);
+										return;
+									}
 
-								var child = child_process.exec(prog, null, function(code,stdout,stderr) {
-									console.log(stderr);
-									test = code == null || code.code == 0;
-									console.log("passed: " + test);
-									success = success && test;
+									console.log(re);
 
-									//let saucelabs knows the result
-									browser.sauceJobUpdate({ passed: test }, function(err) {
-										if (!handleError(err)) return;
-										browser.quit(function(err) {
+									//check if test is successful or not
+									var test = false;
+									var prog = if (Sys.getEnv("EVAL_TEST_CMD") != null)
+									{
+										Sys.getEnv("EVAL_TEST_CMD");
+									} else {
+										'neko ' + path.resolve(untyped __dirname, '../evaluate-test/evaluate-test.n');
+									};
+									console.log("getting response from ", prog);
+
+									var child = child_process.exec(prog, null, function(code,stdout,stderr) {
+										console.log(stderr);
+										test = code == null || code.code == 0;
+										console.log("passed: " + test);
+										success = success && test;
+
+										//let saucelabs knows the result
+										browser.sauceJobUpdate({ passed: test }, function(err) {
 											if (!handleError(err)) return;
-											testBrowsers(browsers);
+											browser.quit(function(err) {
+												if (!handleError(err)) return;
+												testBrowsers(browsers);
+											});
 										});
 									});
+									child.stdout.pipe(process.stdout);
+									child.stdin.write(re);
+									child.stdin.end();
 								});
-								child.stdout.pipe(process.stdout);
-								child.stdin.write(re);
-								child.stdin.end();
-							});
+							}
+
+							poll();
 						});
 					});
 				}
