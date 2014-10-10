@@ -5,9 +5,32 @@ page.open('http://localhost:2000/unit-js.html', function(status) {
 		console.log("status error: " + status);
 		phantom.exit(1);
 	}
-	var ua = page.evaluate(function () {
-		return document.getElementById('haxe:trace').innerText;
-	});
-	console.log(ua);
-	phantom.exit(0);
+
+	var delay = 200,
+			retries = 100; // 20 seconds
+
+	function getContent() {
+		return page.evaluate(function () {
+			return document.getElementById('haxe:trace').textContent.trim();
+		});
+	}
+
+	function poll() {
+		var content = getContent();
+		if(content) {
+			console.log(ua);
+			phantom.exit(0);
+			return;
+		}
+
+		if(retries-- === 0) {
+			// no content
+			phantom.exit(1);
+			return;
+		}
+
+		setTimeout(poll, delay);
+	}
+
+	poll();
 });
