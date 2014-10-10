@@ -21,7 +21,7 @@ for i in "${!TARGET[@]}"; do
 						;;
 					browser )
 						if [ ! -f "unit-js.html" ]; then
-							echo '<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>Tests (JS)</title></head><body id="haxe:trace">' > unit-js.html
+							echo '<!DOCTYPE html>\n<html><head><meta charset="utf-8"><title>Tests (JS)</title></head><body><div id="haxe:trace"></div>' > unit-js.html
 							echo "<script src=\"$BUILTFILE\"></script>" >> unit-js.html
 							echo "</body></html>" >> unit-js.html
 						fi
