@@ -4,7 +4,7 @@
 OS=$(echo $OS | tr '[:upper:]' '[:lower:]')
 
 [[ $SETUP && ${SETUP-x} ]] || SETUP=$TARGET
-[[ $TARGET_DIR && ${TARGET_DIR-x} ]] || TARGET_DIR=.
+[[ $TARGET_DIR && ${TARGET_DIR-x} ]] || TARGET_DIR=`pwd`
 mkdir -p $TARGET_DIR
 
 [[ $ARCH && ${ARCH-x} ]] || ARCH=x86_64
