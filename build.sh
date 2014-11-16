@@ -22,7 +22,7 @@ for i in "${!TARGET[@]}"; do
 				eval "haxe $HX" || exit 1
 				;;
 			as3 )
-				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-as3 \"TARGET_DIR/as3\" -D fdb"
+				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-as3 \"$TARGET_DIR/as3\" -D fdb"
 				HX="$HXFLAGS $HXFLAGS_EXTRA"
 				eval "haxe $HX" || exit 1
 				;;
