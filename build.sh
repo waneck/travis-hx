@@ -15,6 +15,7 @@ for i in "${!TARGET[@]}"; do
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-swf \"$TARGET_DIR/$CURTARGET.swf\" -D fdb"
 				HX=$HXFLAGS $HXFLAGS_EXTRA
 				haxe $HX || exit 1
+				;;
 			swf8 | flash8 )
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-swf -swf-version 8 \"$TARGET_DIR/$CURTARGET.swf\" -D fdb"
 				HX=$HXFLAGS $HXFLAGS_EXTRA
