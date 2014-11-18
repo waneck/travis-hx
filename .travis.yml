@@ -27,7 +27,7 @@ install:
   - $TRAVIS_BUILD_DIR/setup.sh
   - haxelib install buddy
   - haxelib install utest
-  - ln -s $TRAVIS_BUILD_DIR ~/hx-travis
+  - ln -s $TRAVIS_BUILD_DIR ~/travis-hx
 
 script:
   - cd $TRAVIS_BUILD_DIR/tests/fail
