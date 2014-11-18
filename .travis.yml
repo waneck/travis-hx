@@ -27,15 +27,16 @@ install:
   - $TRAVIS_BUILD_DIR/setup.sh
   - haxelib install buddy
   - haxelib install utest
+  - ln -s $TRAVIS_BUILD_DIR ~/hx-travis
 
 script:
   - cd $TRAVIS_BUILD_DIR/tests/fail
   - HXFLAGS="-main Buddy -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
-  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
+  - ~/travis-hx/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
   - HXFLAGS="-main Utest -lib utest -D travis" ~/travis-hx/build.sh
-  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
+  - ~/travis-hx/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
   - cd $TRAVIS_BUILD_DIR/tests/success
   - HXFLAGS="-main Buddy -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
-  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME
+  - ~/travis-hx/runtests.sh $FILENAME
   - HXFLAGS="-main Utest -lib utest -D travis" ~/travis-hx/build.sh
-  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME
+  - ~/travis-hx/runtests.sh $FILENAME
