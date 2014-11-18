@@ -8,27 +8,35 @@ env:
       # SAUCE_USERNAME
     - secure: "CgBkZlD50ICcik+vYxiKUU/gLGz8G2a62u+k4VoinbOMR9eWk2mk5Qxt4dVMZH2cYVBzFrBooFm/2R+DjrlImM4KoUEtHwW7uPSrEuIGTcIwx7D7wtF1BmJnnnt2Tn5Aq8osYby0plLtPyCQ6TFBDppXc9fnNQnVglZ0HA3XcNE="
   matrix:
-    - TARGET=neko macro FILENAME=unit.n # run both on same instance
-    - TARGET=js FILENAME=unit.js TOOLCHAIN="default browser" NODECMD="var unit = require('./unit.js').unit; unit.Test.main(); if (unit.Test.success) process.exit(0); else process.exit(1);" SAUCE_BROWSERS=sauce-browsers-example.json
+    - TARGET=neko macro # run both on same instance
+    - TARGET=js TOOLCHAIN="default browser" SAUCE_BROWSERS=sauce-browsers-example.json
     - TARGET=php
     - TARGET=cpp
-    - TARGET=flash9 FILENAME=unit9.swf
-    - TARGET=as3 PATH=$PATH:$HOME/flex_sdk_4/bin
+    - TARGET=flash9 
+    - TARGET=as3
     - TARGET=java
     - TARGET=cs
-    - TARGET=flash8 FILENAME=unit8.swf
-    - TARGET=python FILENAME=unit.py
+    - TARGET=flash8 
+    - TARGET=python 
 
 matrix:
   fast_finish: true
   allow_failures:
-    - env: TARGET=flash8 FILENAME=unit8.swf
+    - env: TARGET=flash8 
 
 install:
-  - travis_retry git clone https://github.com/HaxeFoundation/haxe.git ~/haxegit
   - $TRAVIS_BUILD_DIR/setup.sh
+  - haxelib install buddy
+  - haxelib install utest
 
 script:
-  - cd ~/haxegit/tests/unit
-  - haxe compile-$TARGET.hxml -D fdb
+  - cd $TRAVIS_BUILD_DIR/tests/fail
+  - HXFLAGS="-main Buddy -lib buddy" ~/travis-hx/build.sh
+  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
+  - HXFLAGS="-main Utest -lib utest" ~/travis-hx/build.sh
+  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
+  - cd $TRAVIS_BUILD_DIR/tests/success
+  - HXFLAGS="-main Buddy -lib buddy" ~/travis-hx/build.sh
+  - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME
+  - HXFLAGS="-main Utest -lib utest" ~/travis-hx/build.sh
   - $TRAVIS_BUILD_DIR/runtests.sh $FILENAME
