@@ -45,6 +45,9 @@ If applicable, specifies a custom toolchain to be used for building / running. D
 
 * <a name="toolchain_remark_browser" /> *(1)* Runs under `phantomjs`, and if `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` are defined, runs under SauceLabs as well
 
+### EVAL_TEST_CMD
+On non-sys platforms (example: flash, browser javascript, etc), the exit code can't be used to determine if a test ended successfully or not. Instead, the program at `EVAL_TEST_CMD` environment variable will be used. If no program is defined, [the default program](extra/evaluate-test/EvalTest.hx) will be used. This will work with both utest (if compiling with `-D travis`) and buddy (if compiling with `-D reporter=buddy.reporting.TravisHxReporter`). Please note that you can fool the eval test quite easily for now - for example by tracing `success: true` while in a test.
+
 ## TODOs
 Some functionality that are still to be implemented. Pull requests are very welcome:
 

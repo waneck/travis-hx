@@ -24,6 +24,7 @@ if [ ! -f /usr/bin/neko ]; then
 	cd $HOME/neko*
 	sudo mkdir -p /usr/lib/neko
 	sudo cp -Rf * /usr/lib/neko
+	sudo chmod +x /usr/lib/neko/neko*
 	sudo ln -s /usr/lib/neko/neko* /usr/bin
 	sudo ln -s /usr/lib/neko/lib* /usr/lib
 fi
