@@ -67,7 +67,18 @@ for i in "${!TARGET[@]}"; do
 					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
 				fi
 				ls
+
+				sudo killall "Flash Player Debugger"
+				killall tail
+				ps -A
+				ls /tmp/
+				rm -f /tmp/flash-fifo
+				ls /tmp/
+
+				ls $FLASHLOGPATH
 				rm -f $FLASHLOGPATH
+				ls $FLASHLOGPATH
+
 				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
 				for i in 0 1 2 3 4 5; do
@@ -84,9 +95,6 @@ for i in "${!TARGET[@]}"; do
 				fi
 				echo "checking contents"
 
-				sudo killall "Flash Player Debugger"
-				killall tail
-				rm -f /tmp/flash-fifo
 				mkfifo /tmp/flash-fifo
 				tail -f "$FLASHLOGPATH" > /tmp/flash-fifo &
 				$EVAL_TEST_CMD < /tmp/flash-fifo || exit 1
