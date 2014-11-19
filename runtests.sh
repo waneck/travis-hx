@@ -25,6 +25,7 @@ for i in "${!TARGET[@]}"; do
 							echo "<script src=\"$BUILTFILE\"></script>" >> unit-js.html
 							echo "</body></html>" >> unit-js.html
 						fi
+						killall nekotools
 						nekotools server &
 						echo "phantomjs test"
 						evaltest phantomjs $(dirname $0)/extra/phantom/testphantom.js || exit 1
@@ -38,8 +39,6 @@ for i in "${!TARGET[@]}"; do
 							retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
 							node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
 						fi
-						echo "killing nekotools"
-						killall -9 nekotools
 						;;
 					* )
 						echo "Unknown toolchain $CURTOOL"
