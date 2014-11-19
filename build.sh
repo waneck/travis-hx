@@ -7,7 +7,12 @@ for i in "${!TARGET[@]}"; do
 		CURTOOL=${TOOLCHAIN[j]}
 		case ${TARGET[i]} in
 			js )
-				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-js \"$TARGET_DIR/js.js\""
+				if [ $CURTOOL = "browser" ]; then
+					[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-js \"$TARGET_DIR/js.js\""
+				else
+					[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-js \"$TARGET_DIR/js.js -D nodejs\""
+				fi
+
 				HX="$HXFLAGS $HXFLAGS_EXTRA"
 				eval "haxe $HX" || exit 1
 				;;
