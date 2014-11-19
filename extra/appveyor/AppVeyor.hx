@@ -170,9 +170,13 @@ class AppVeyor
 		cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
 		cd('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\project');
 		if (Sys.getEnv("ARCH") == "x86_64")
-			cmd('neko', ['build.n','windows-m64']);
-		else
+		{
 			cmd('neko', ['build.n']);
+			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64','-Dstatic_link']);
+			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64']);
+		} else {
+			cmd('neko', ['build.n']);
+		}
 	}
 
 	static function setup()
