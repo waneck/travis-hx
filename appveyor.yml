@@ -7,6 +7,7 @@ environment:
     - TARGET: cs
     - TARGET: java
     - TARGET: js
+      HXFLAGS_EXTRA=-js js.js -D nodejs
     - TARGET: python
       PYTHONCMD: C:\python34\python
 
@@ -24,15 +25,6 @@ install:
   - C:\travis-hx\AppVeyor.exe run haxelib install utest
 
 build_script:
-    # expected to fail
-    # commented out on appveyor since it still fails even though "echo fails as expected" line is called
-  # - cd C:\projects\travis-hx\tests\fail
-  # - SET HXFLAGS=-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter
-  # - C:\travis-hx\AppVeyor.exe build
-  # - C:\travis-hx\AppVeyor.exe test %FILENAME% && exit 1 || echo "fails as expected"
-  # - SET HXFLAGS=-main Utest -lib utest -D travis
-  # - C:\travis-hx\AppVeyor.exe build
-  # - C:\travis-hx\AppVeyor.exe test %FILENAME% && exit 1 || echo "fails as expected"
     # not expected to fail
   - cd C:\projects\travis-hx\tests\success
   - SET HXFLAGS=-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter
