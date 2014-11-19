@@ -75,9 +75,9 @@ for i in "${!TARGET[@]}"; do
 				rm -f /tmp/flash-fifo
 				ls /tmp/
 
-				ls $FLASHLOGPATH
-				rm -f $FLASHLOGPATH
-				ls $FLASHLOGPATH
+				ls "$FLASHLOGPATH"
+				rm -f "$FLASHLOGPATH"
+				ls "$FLASHLOGPATH"
 
 				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
