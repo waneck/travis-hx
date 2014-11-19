@@ -10,9 +10,6 @@ for i in "${!TARGET[@]}"; do
 		BUILTFILE=$1
 		case ${TARGET[i]} in
 			js )
-				ls $TARGET_DIR
-				echo "ls"
-				ls
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/js.js"
 				case $CURTOOL in
 					default | nodejs )
@@ -41,8 +38,12 @@ for i in "${!TARGET[@]}"; do
 							retry curl https://gist.github.com/santiycr/5139565/raw/sauce_connect_setup.sh -L | bash
 							node $(dirname $0)/extra/saucelabs/RunSauceLabs.js || exit 1
 						fi
+						killall neko
+						killall nekotools
 						;;
 					* )
+						echo "Unknown toolchain $CURTOOL"
+						exit 1
 						;;
 				esac
 				;;
