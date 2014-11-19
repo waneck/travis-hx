@@ -153,7 +153,7 @@ class AppVeyor
 					case 'python':
 						'-python $targetDir/python.py';
 					case 'js':
-						'-js $targetDir/js.js';
+						'-js $targetDir/js.js -D nodejs';
 					case 'cpp' | 'java' | 'cs':
 						'-$target $targetDir/$target';
 					case 'interp':
