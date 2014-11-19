@@ -36,6 +36,12 @@ class AppVeyor
 				args.shift();
 				var c = args.shift();
 				cmd(c,args,3);
+			case 'download':
+				var args = Sys.args();
+				download(args[1], args[2]);
+			case 'untar':
+				var args = Sys.args();
+				untar(args[1], args[2]);
 			case 'test':
 				test();
 		}
