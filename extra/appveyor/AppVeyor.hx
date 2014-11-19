@@ -131,12 +131,6 @@ class AppVeyor
 		var flags = Sys.getEnv("HXFLAGS");
 		if (flags == null)
 			flags = "";
-		var extra = Sys.getEnv("HXFLAGS_EXTRA");
-		if (extra == null)
-			extra = "";
-		else
-			extra = " " + extra;
-		flags += extra;
 
 		var flags = flags.split(' ');
 		var targetDir = Sys.getEnv("TARGET_DIR");
