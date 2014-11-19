@@ -3,14 +3,11 @@ clone_folder: c:\projects\travis-hx
 environment:
   matrix:
     - TARGET: neko
-      FILENAME: unit.n
     - TARGET: cpp
-    # - TARGET: cs
+    - TARGET: cs
     - TARGET: java
     - TARGET: js
-      NODECMD: "var unit = require('./unit.js').unit; unit.Test.main(); if (unit. Test.success) process.exit(0); else process.exit(1);"
     - TARGET: python
-      FILENAME: unit.py
       PYTHONCMD: C:\python34\python
 
 # matrix:
@@ -23,11 +20,23 @@ install:
   - mkdir C:\travis-hx
   - copy extra\appveyor\AppVeyor.exe C:\travis-hx
   - C:\travis-hx\AppVeyor.exe setup
+  - haxelib install buddy
+  - haxelib install utest
 
 build_script:
-  - C:\travis-hx\AppVeyor.exe retry git clone https://github.com/HaxeFoundation/haxe.git C:\haxegit
-  - cd C:\haxegit\tests\unit
-  - C:\travis-hx\AppVeyor.exe run haxe compile-%TARGET%.hxml -D fdb
+    # expected to fail
+  - cd C:\projects\travis-hx\tests\fail
+  - SET HXFLAGS="-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter"
+  - C:\travis-hx\AppVeyor.exe build
+  - C:\travis-hx\AppVeyor.exe test %FILENAME% && exit 1 || echo "fails as expected"
+  - SET HXFLAGS="-main Utest -lib utest -D travis"
+  - C:\travis-hx\AppVeyor.exe build
+  - C:\travis-hx\AppVeyor.exe test %FILENAME% && exit 1 || echo "fails as expected"
+    # not expected to fail
+  - cd C:\projects\travis-hx\tests\success
+  - SET HXFLAGS="-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter"
+  - C:\travis-hx\AppVeyor.exe build
   - C:\travis-hx\AppVeyor.exe test %FILENAME%
-  # - %APPVEYOR_BUILD_FOLDER%\extra\appveyor\AppVeyor.exe test
-  # - extra\appveyor\AppVeyor.exe build
+  - SET HXFLAGS="-main Utest -lib utest -D travis"
+  - C:\travis-hx\AppVeyor.exe build
+  - C:\travis-hx\AppVeyor.exe test %FILENAME%
