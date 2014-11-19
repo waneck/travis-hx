@@ -98,7 +98,13 @@ class AppVeyor
 						{
 							if (file.endsWith('.exe'))
 							{
-								cmd('$built/$file',null);
+								if (target == 'cs' && (Sys.getEnv("ARCH") == 'i686' || Sys.getEnv("ARCH") == 'x86'))
+								{
+									cmd('CorFlags',['$built/$file','/32BIT+']);
+									cmd('$built/$file',null);
+								} else {
+									cmd('$built/$file',null);
+								}
 								break;
 							}
 						}
@@ -114,7 +120,15 @@ class AppVeyor
 						{
 							if (file.endsWith('.jar'))
 							{
-								cmd('java',['-jar','$built/$file']);
+								if (Sys.getEnv("ARCH") == 'i686' || Sys.getEnv("ARCH") == 'x86')
+								{
+									var last = Sys.getEnv("PATH");
+									Sys.putEnv('PATH','C:\\Program Files (x86)\\Java\\jdk1.7.0\\bin;$last');
+									cmd('java',['-jar','$built/$file']);
+									Sys.putEnv('PATH',last);
+								} else {
+									cmd('java',['-jar','$built/$file']);
+								}
 								break;
 							}
 						}

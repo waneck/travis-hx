@@ -7,6 +7,18 @@ class Utest
 {
 	static function main()
 	{
+#if cpp
+	#if HXCPP_M64
+		trace('is 64-bit');
+	#else
+		trace('is 32-bit');
+	#end
+#elseif java
+		trace('arch model: ' + java.lang.System.getProperty("sun.arch.data.model"));
+#elseif cs
+		trace('pointer size: ' + cs.system.IntPtr.Size);
+#end
+
 		var runner = new Runner();
 
 		runner.addCase(new UtestSuccessCase());

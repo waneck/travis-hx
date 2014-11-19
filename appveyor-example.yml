@@ -27,6 +27,7 @@ matrix:
 
 install: # clone travis-hx repo and setup the target
   - git clone --depth=50 --branch=master git://github.com/waneck/travis-hx.git C:\travis-hx
+  - copy C:\travis-hx\extra\appveyor\AppVeyor.exe C:\travis-hx
   - C:\travis-hx\AppVeyor.exe setup
 
 script:
