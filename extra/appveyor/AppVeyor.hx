@@ -154,7 +154,9 @@ class AppVeyor
 						'-python $targetDir/python.py';
 					case 'js':
 						'-js $targetDir/js.js -D nodejs';
-					case 'cpp' | 'java' | 'cs':
+					case 'cpp' if(Sys.getEnv("ARCH") == "x86_64"):
+						'-D HXCPP_M64 -cpp $targetDir/$target';
+					case 'cpp' |'java' | 'cs':
 						'-$target $targetDir/$target';
 					case 'interp':
 						'--interp';
@@ -173,7 +175,10 @@ class AppVeyor
 	{
 		cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
 		cd('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\project');
-		cmd('neko', ['build.n']);
+		if (Sys.getEnv("ARCH") == "x86_64")
+			cmd('neko', ['build.n','windows-m64']);
+		else
+			cmd('neko', ['build.n']);
 	}
 
 	static function setup()
