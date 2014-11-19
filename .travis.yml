@@ -31,12 +31,12 @@ install:
 
 script:
   - cd $TRAVIS_BUILD_DIR/tests/fail
-  - HXFLAGS="-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
+  - HXFLAGS="-main BuddyTests -dce full -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
   - HXFLAGS="-main Utest -lib utest -D travis" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
   - cd $TRAVIS_BUILD_DIR/tests/success
-  - HXFLAGS="-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
+  - HXFLAGS="-main BuddyTests -dce full -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME
   - HXFLAGS="-main Utest -lib utest -D travis" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME
