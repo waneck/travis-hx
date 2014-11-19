@@ -2,7 +2,7 @@ import buddy.*;
 using buddy.Should;
 
 // compile with `haxe -lib buddy -main Buddy`
-class Buddy extends buddy.BuddySuite implements buddy.Buddy
+class BuddyTests extends buddy.BuddySuite implements buddy.Buddy
 {
 	public function new()
 	{
