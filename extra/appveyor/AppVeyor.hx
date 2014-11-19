@@ -95,12 +95,14 @@ class AppVeyor
 				case 'cpp' | 'cs':
 					var built = built;
 					if (built == null) built = '$targetDir/$target';
+					var found = false;
 					if (isDirectory(built))
 					{
 						for (file in readDirectory(built))
 						{
 							if (file.endsWith('.exe'))
 							{
+								found = true;
 								if (target == 'cs' && (Sys.getEnv("ARCH") == 'i686' || Sys.getEnv("ARCH") == 'x86'))
 								{
 									cmd('CorFlags',['$built/$file','/32BIT+','/Force']);
@@ -111,12 +113,15 @@ class AppVeyor
 								break;
 							}
 						}
+						if (!found)
+							throw 'File not found at dir $built. Files in there: ${readDirectory(built)}';
 						continue;
 					}
 					cmd(built,[]);
 				case 'java':
 					var built = built;
 					if (built == null) built = '$targetDir/java';
+					var found = false;
 					if (isDirectory(built))
 					{
 						for (file in readDirectory(built))
@@ -135,6 +140,8 @@ class AppVeyor
 								break;
 							}
 						}
+						if (!found)
+							throw 'File not found at dir $built. Files in there: ${readDirectory(built)}';
 						continue;
 					}
 					cmd('java',['-jar','$built']);
@@ -155,6 +162,25 @@ class AppVeyor
 			targetDir = Sys.getCwd();
 		for (target in Sys.getEnv("TARGET").split(" "))
 		{
+			if (target == 'cpp' || target == 'cs' || target == 'java')
+			{
+				var targetDir = targetDir;
+				while (targetDir.endsWith('/')) targetDir = targetDir.substr(0,targetDir.length-1);
+				if (exists(targetDir))
+				{
+					for (file in readDirectory(targetDir))
+					{
+						if (!isDirectory(targetDir + '/' + file))
+						{
+							try
+							{
+								deleteFile(targetDir + '/' + file);
+							}
+							catch(e:Dynamic) {}
+						}
+					}
+				}
+			}
 			var extra = Sys.getEnv("HXFLAGS_EXTRA");
 			if (extra == null)
 				extra = switch target
@@ -188,7 +214,6 @@ class AppVeyor
 		cd('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\project');
 		if (Sys.getEnv("ARCH") == "x86_64")
 		{
-			cmd('neko', ['build.n']);
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64','-Dstatic_link']);
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64']);
 		} else {
