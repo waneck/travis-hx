@@ -64,6 +64,7 @@ for i in "${!TARGET[@]}"; do
 					FLASHLOGPATH="$HOME/Library/Preferences/Macromedia/Flash Player/Logs/flashlog.txt"
 				fi
 				ls
+				rm -f $FLASHLOGPATH
 				echo "runflash $BUILTFILE"
 				runflash "$BUILTFILE" &
 				for i in 0 1 2 3 4 5; do
