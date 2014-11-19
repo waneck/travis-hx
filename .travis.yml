@@ -8,7 +8,8 @@ env:
     - secure: "CgBkZlD50ICcik+vYxiKUU/gLGz8G2a62u+k4VoinbOMR9eWk2mk5Qxt4dVMZH2cYVBzFrBooFm/2R+DjrlImM4KoUEtHwW7uPSrEuIGTcIwx7D7wtF1BmJnnnt2Tn5Aq8osYby0plLtPyCQ6TFBDppXc9fnNQnVglZ0HA3XcNE="
   matrix:
     - TARGET=neko macro # run both on same instance
-    - TARGET=js TOOLCHAIN="default browser" SAUCE_BROWSERS=sauce-browsers-example.json
+    - TARGET=js TOOLCHAIN=default HXFLAGS_EXTRA="-D nodejs"
+    - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=sauce-browsers-example.json
     - TARGET=php
     - TARGET=cpp
     - TARGET=flash9 
@@ -31,12 +32,12 @@ install:
 
 script:
   - cd $TRAVIS_BUILD_DIR/tests/fail
-  - HXFLAGS="-main BuddyTests -dce full -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
+  - HXFLAGS="-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
   - HXFLAGS="-main Utest -lib utest -D travis" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME && exit 1 || echo "fails as expected"
   - cd $TRAVIS_BUILD_DIR/tests/success
-  - HXFLAGS="-main BuddyTests -dce full -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
+  - HXFLAGS="-main BuddyTests -lib buddy -D reporter=buddy.reporting.TravisHxReporter" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME
   - HXFLAGS="-main Utest -lib utest -D travis" ~/travis-hx/build.sh
   - ~/travis-hx/runtests.sh $FILENAME
