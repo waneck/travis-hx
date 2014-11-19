@@ -13,7 +13,9 @@ environment:
     - TARGET: java
       ARCH: i686
     - TARGET: js
-    # - TARGET: python
+    - TARGET: python
+    - TARGET: python
+      ARCH: x86_64
       # PYTHONCMD: C:\python34\python
 
 matrix:

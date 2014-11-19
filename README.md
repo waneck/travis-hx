@@ -37,7 +37,7 @@ Defines the OS and architecture to be used as test. The following combinations m
 | i686    | Linux    | 32-bit           | haxe, neko, js (node and phantomjs), php
 | i686    | Mac      | 32-bit           | none
 | i686    | Windows  | 32-bit (AppVeyor)| haxe, neko, cpp, java, cs, js (node only)
-| x86_64  | Windows  | 64-bit (AppVeyor)| cpp, java(default), cs(default)
+| x86_64  | Windows  | 64-bit (AppVeyor)| cpp, java(default), cs(default), python
 
 ### TOOLCHAIN
 If applicable, specifies a custom toolchain to be used for building / running. Default is always `default`

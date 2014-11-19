@@ -87,7 +87,10 @@ class AppVeyor
 					if (built == null) built = '$targetDir/python.py';
 					var pcmd = Sys.getEnv("PYTHONCMD");
 					if (pcmd == null)
-						pcmd = "python3";
+						if (Sys.getEnv("ARCH") == "x86_64")
+							pcmd = "C:\\Python34-x64\\python";
+						else
+							pcmd = "C:\\Python34\\python";
 					cmd(pcmd,[built]);
 				case 'cpp' | 'cs':
 					var built = built;
@@ -100,7 +103,7 @@ class AppVeyor
 							{
 								if (target == 'cs' && (Sys.getEnv("ARCH") == 'i686' || Sys.getEnv("ARCH") == 'x86'))
 								{
-									cmd('CorFlags',['$built/$file','/32BIT+']);
+									cmd('CorFlags',['$built/$file','/32BIT+','/Force']);
 									cmd('$built/$file',null);
 								} else {
 									cmd('$built/$file',null);
