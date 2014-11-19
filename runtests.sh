@@ -10,6 +10,9 @@ for i in "${!TARGET[@]}"; do
 		BUILTFILE=$1
 		case ${TARGET[i]} in
 			js )
+				ls $TARGET_DIR
+				echo "ls"
+				ls
 				[ ! -z $BUILTFILE ] || BUILTFILE="$TARGET_DIR/js.js"
 				case $CURTOOL in
 					default | nodejs )

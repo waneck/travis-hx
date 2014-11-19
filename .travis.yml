@@ -22,7 +22,8 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: TARGET=flash8 
+    - env: TARGET=as3  # buddy issue with as3
+    - env: TARGET=python  # buddy issue with python
 
 install:
   - $TRAVIS_BUILD_DIR/setup.sh
