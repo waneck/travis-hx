@@ -1,6 +1,6 @@
 # travis-hx
 [![Build Status](https://travis-ci.org/waneck/travis-hx.svg?branch=master)](https://travis-ci.org/waneck/travis-hx)
-[![Build status](https://ci.appveyor.com/api/projects/status/0n0ugcs76gt8423y)](https://ci.appveyor.com/project/waneck/travis-hx)
+[![Build status](https://ci.appveyor.com/api/projects/status/iijaet0v30x55b7u)](https://ci.appveyor.com/project/waneck/travis-hx)
 
 Helpers (and wikis) to easily test haxe code on travis. These scripts are an abstraction from @andyli's work on getting Travis to work with all Haxe targets
 
