@@ -164,8 +164,7 @@ class AppVeyor
 		{
 			if (target == 'cpp' || target == 'cs' || target == 'java')
 			{
-				var targetDir = targetDir;
-				while (targetDir.endsWith('/')) targetDir = targetDir.substr(0,targetDir.length-1);
+				var targetDir = targetDir + '/' + target;
 				if (exists(targetDir))
 				{
 					for (file in readDirectory(targetDir))
