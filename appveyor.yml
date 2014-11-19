@@ -20,8 +20,8 @@ install:
   - mkdir C:\travis-hx
   - copy extra\appveyor\AppVeyor.exe C:\travis-hx
   - C:\travis-hx\AppVeyor.exe setup
-  - haxelib install buddy
-  - haxelib install utest
+  - C:\HaxeToolkit\haxe\haxelib install buddy
+  - C:\HaxeToolkit\haxe\haxelib install utest
 
 build_script:
     # expected to fail
