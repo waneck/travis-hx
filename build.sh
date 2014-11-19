@@ -10,7 +10,7 @@ for i in "${!TARGET[@]}"; do
 				if [ $CURTOOL = "browser" ]; then
 					[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-js \"$TARGET_DIR/js.js\""
 				else
-					[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-js \"$TARGET_DIR/js.js -D nodejs\""
+					[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-js \"$TARGET_DIR/js.js\" -D nodejs"
 				fi
 
 				HX="$HXFLAGS $HXFLAGS_EXTRA"
