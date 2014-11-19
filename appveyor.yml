@@ -10,10 +10,10 @@ environment:
     - TARGET: python
       PYTHONCMD: C:\python34\python
 
-# matrix:
-#   allow_failures:
-#     - TARGET: neko
-#       FILENAME: unit.n
+matrix:
+  allow_failures:
+    # buddy issue
+    - TARGET: python
 
 install:
   - echo starting
