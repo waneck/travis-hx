@@ -24,6 +24,9 @@ The target file (or directory) as specified by the haxe build.
 ### HXFLAGS
 If you decide to build using hx-travis' build scripts, use this flag to configure the flags used to call the haxe compiler
 
+### HXFLAGS_EXTRA
+Again if you decide to build using hx-travis' build scripts, you can use this flag to determine target-specific options. Please note that if you override this you must include the target path and name. For example, if you want `-D nodejs` on a js app, you need to set HXFLAGS_EXTRA AS `HXFLAGS_EXTRA=" -D nodejs -js js.js"`
+
 ### OS and ARCH
 Defines the OS and architecture to be used as test. The following combinations may be used:
 
