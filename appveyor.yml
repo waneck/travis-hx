@@ -7,7 +7,7 @@ environment:
     - TARGET: cs
     - TARGET: java
     - TARGET: js
-      HXFLAGS_EXTRA=-js js.js -D nodejs
+      HXFLAGS_EXTRA: -js js.js -D nodejs
     - TARGET: python
       PYTHONCMD: C:\python34\python
 
