@@ -84,6 +84,7 @@ for i in "${!TARGET[@]}"; do
 				fi
 				echo "checking contents"
 
+				sudo killall "Flash Player Debugger"
 				killall tail
 				rm -f /tmp/flash-fifo
 				mkfifo /tmp/flash-fifo
