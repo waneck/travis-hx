@@ -84,6 +84,7 @@ for i in "${!TARGET[@]}"; do
 				fi
 				echo "checking contents"
 
+				killall tail
 				rm -f /tmp/flash-fifo
 				mkfifo /tmp/flash-fifo
 				tail -f "$FLASHLOGPATH" > /tmp/flash-fifo &
