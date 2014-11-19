@@ -1,8 +1,7 @@
-language: objective-c
+language: c
 
 env:
   global:
-    - OS: mac
       # SAUCE_ACCESS_KEY
     - secure: "YE0n2BcdXokZ/hgcOoptp0bIw+sMKme/+XMNxT01BYqsSN/7KyNkEC5SpAN6K5IYVTBo59QP3EtDQtrsX5uMo9PL84CQzt2wKm2t9yByGIk3TehQ339fdJZKbnd9cVL726fCcDp06Ld73RNh63pc+DglmrKYB5Lx5ElwTs9PnPU="
       # SAUCE_USERNAME
