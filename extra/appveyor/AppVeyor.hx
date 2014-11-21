@@ -219,6 +219,8 @@ class AppVeyor
 		{
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64','-Dstatic_link']);
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64']);
+			rename('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows64','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows');
+			rename('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows64','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows');
 		} else {
 			cmd('neko', ['build.n']);
 		}
