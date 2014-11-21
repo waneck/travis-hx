@@ -2,7 +2,7 @@ clone_folder: c:\projects\travis-hx
 
 environment:
   global:
-    - HXCPP_LOAD_DEBUG: 1
+    HXCPP_LOAD_DEBUG: 1
   matrix:
     # - TARGET: neko
     - TARGET: cpp
