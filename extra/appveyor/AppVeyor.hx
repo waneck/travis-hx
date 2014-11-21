@@ -219,11 +219,25 @@ class AppVeyor
 		{
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64','-Dstatic_link']);
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64']);
-			rename('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows64','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows');
-			rename('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows64','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows');
+			mkdir('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows');
+			mkdir('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows');
+			for (file in readDirectory('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows'))
+				copy('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows64\\$file','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows\\$file');
+			for (file in readDirectory('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows'))
+				copy('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows64\\$file','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows\\$file');
 		} else {
 			cmd('neko', ['build.n']);
 		}
+	}
+
+	private static function copy(from:String,to:String)
+	{
+		sys.io.File.saveBytes(to,sys.io.File.getBytes(from));
+	}
+
+	private static function mkdir(dir:String)
+	{
+		if (!exists(dir)) createDirectory(dir);
 	}
 
 	static function setup()
