@@ -110,13 +110,7 @@ class AppVeyor
 							if (file.endsWith('.exe'))
 							{
 								found = true;
-								if (target == 'cs' && (Sys.getEnv("ARCH") == 'i686' || Sys.getEnv("ARCH") == 'x86'))
-								{
-									cmd('CorFlags',['$built/$file','/32BIT+','/Force']);
-									cmd('$built/$file',null);
-								} else {
-									cmd('$built/$file',null);
-								}
+								cmd('$built/$file',null);
 								break;
 							}
 						}
@@ -200,6 +194,8 @@ class AppVeyor
 						'-js $targetDir/js.js -D nodejs';
 					case 'cpp' if(Sys.getEnv("ARCH") == "x86_64"):
 						'-D HXCPP_M64 -cpp $targetDir/$target';
+					case 'cs' if(Sys.getEnv("ARCH") == "x86" || Sys.getEnv("ARCH") == "i686"):
+						'-D arch=x86 -cs $targetDir/$target';
 					case 'cpp' |'java' | 'cs':
 						'-$target $targetDir/$target';
 					case 'interp':
