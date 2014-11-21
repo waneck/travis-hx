@@ -221,9 +221,9 @@ class AppVeyor
 			cmd('haxelib',['run','hxcpp','Build.xml','-Dwindows','-DHXCPP_M64']);
 			mkdir('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows');
 			mkdir('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows');
-			for (file in readDirectory('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows'))
+			for (file in readDirectory('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows64'))
 				copy('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows64\\$file','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\bin\\Windows\\$file');
-			for (file in readDirectory('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows'))
+			for (file in readDirectory('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows64'))
 				copy('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows64\\$file','C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\lib\\Windows\\$file');
 		} else {
 			cmd('neko', ['build.n']);
