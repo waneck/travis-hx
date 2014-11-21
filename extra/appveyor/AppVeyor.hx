@@ -94,7 +94,14 @@ class AppVeyor
 					cmd(pcmd,[built]);
 				case 'cpp' | 'cs':
 					var built = built;
-					if (built == null) built = '$targetDir/$target';
+					if (built == null)
+					{
+						if (target == 'cs')
+							built = '$targetDir/$target';
+						else
+							built = '$targetDir/$target/bin';
+					}
+
 					var found = false;
 					if (isDirectory(built))
 					{
@@ -128,6 +135,7 @@ class AppVeyor
 						{
 							if (file.endsWith('.jar'))
 							{
+								found = true;
 								if (Sys.getEnv("ARCH") == 'i686' || Sys.getEnv("ARCH") == 'x86')
 								{
 									var last = Sys.getEnv("PATH");
