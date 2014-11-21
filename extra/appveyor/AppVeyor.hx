@@ -96,7 +96,7 @@ class AppVeyor
 					var built = built;
 					if (built == null)
 					{
-						if (target == 'cs')
+						if (target == 'cpp')
 							built = '$targetDir/$target';
 						else
 							built = '$targetDir/$target/bin';
