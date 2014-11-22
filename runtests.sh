@@ -127,13 +127,21 @@ for i in "${!TARGET[@]}"; do
 					HASRUN=0
 					for file in "$TARGET_DIR/cs/bin/"*.exe; do
 						echo "mono --debug $file"
-						mono --debug $file || exit 1
+						if [ $ARCH = "i686" ]; then
+							mono32 --debug $file || exit 1
+						else
+							mono --debug $file || exit 1
+						fi
 						HASRUN=1
 					done
 					[ $HASRUN -eq 1 ] || exit 1
 				else
 					echo "mono --debug $BUILTFILE"
-					mono --debug $BUILTFILE || exit 1
+					if [ $ARCH = "i686" ]; then
+						mono32 --debug $BUILTFILE || exit 1
+					else
+						mono --debug $BUILTFILE || exit 1
+					fi
 				fi
 				;;
 			java )

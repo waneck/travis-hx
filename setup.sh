@@ -84,6 +84,15 @@ for i in "${!SETUP[@]}"; do
 			;;
 		cs )
 			testprog mcs --version || install mono-mcs mono || sudo apt-get install -y mono-mcs || exit 1
+			if [ $ARCH = "i686" ] || [ $ARCH = "x86" ]; then
+				if [ $OS = "mac" ]; then
+					echo "Mac i686 C# tests is not available!"
+					exit 1
+				fi
+				retry wget -O $HOME/mono32.tar.xz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/mono32.tar.xz || exit 1
+				tar -xvf $HOME/mono32.tar.xz
+				sudo mv $HOME/mono32 /usr/bin || exit 1
+			fi
 			retry haxelib git hxcs https://github.com/HaxeFoundation/hxcs
 			mcs --version || exit 1
 			;;

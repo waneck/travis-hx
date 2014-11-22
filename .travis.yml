@@ -10,16 +10,20 @@ env:
     - TARGET=neko macro # run both on same instance
     - TARGET=neko ARCH=i686
     - TARGET=js TOOLCHAIN=default
-    - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=sauce-browsers-example.json
+    - TARGET=js TOOLCHAIN=default ARCH=i686
+    - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=.sauce-browsers.json
     - TARGET=php
     - TARGET=cpp
     - TARGET=cpp ARCH=i686
     - TARGET=flash9 
     - TARGET=as3
     - TARGET=java
+    - TARGET=java ARCH=i686
     - TARGET=cs
+    - TARGET=cs ARCH=i686
     - TARGET=flash8 
     - TARGET=python 
+    - TARGET=python ARCH=i686
 
 matrix:
   fast_finish: true
