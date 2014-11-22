@@ -153,12 +153,20 @@ for i in "${!TARGET[@]}"; do
 					HASRUN=0
 					for file in "$TARGET_DIR/java/"*.jar; do
 						echo "java -jar $file"
-						java -jar $file || exit 1
+						if [ $ARCH = "i686" ]; then
+							/usr/lib/jvm/java-7-openjdk-i386/bin/java -d32 -jar "$file" || exit 1
+						else
+							java -jar "$file" || exit 1
+						fi
 						HASRUN=1
 					done
 					[ $HASRUN -eq 1 ] || exit 1
 				else
-					java -jar "$BUILTFILE" || exit 1
+					if [ $ARCH = "i686" ]; then
+						/usr/lib/jvm/java-7-openjdk-i386/bin/java -d32 -jar "$BUILTFILE" || exit 1
+					else
+						java -jar "$BUILTFILE" || exit 1
+					fi
 				fi
 				;;
 			interp | macro )
