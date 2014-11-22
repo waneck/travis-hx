@@ -74,7 +74,11 @@ for i in "${!SETUP[@]}"; do
 			fi
 			;;
 		java )
-			testprog javac -version || install openjdk || install openjdk-7-jdk || exit 1
+			if [ $ARCH = "i686" ] && [ ! $OS = "mac" ]; then
+				sudo apt-get install -y openjdk-7-jdk:i386 > /dev/null 2> /dev/null || exit 1
+			else
+				testprog javac -version || install openjdk || install openjdk-7-jdk || exit 1
+			fi
 			retry haxelib git hxjava https://github.com/HaxeFoundation/hxjava
 			javac -version || exit 1
 			;;
