@@ -34,8 +34,8 @@ Defines the OS and architecture to be used as test. The following combinations m
 | ------  | -------- | ---------------- | ----------------------------------------------------- |
 | x86_64* | Linux    | 64-bit           | all; flash is always 32-bit
 | x86_64* | Mac      | 64-bit           | all; flash is always 32-bit
-| i686    | Linux    | 32-bit           | haxe, neko, js (node and phantomjs), php
-| i686    | Mac      | 32-bit           | none
+| i686    | Linux    | 32-bit           | haxe, neko, js (node and phantomjs), php, cpp
+| i686    | Mac      | 32-bit           | cpp
 | i686    | Windows  | 32-bit (AppVeyor)| haxe, neko, cpp, java, cs, js (node only)
 | x86_64  | Windows  | 64-bit (AppVeyor)| cpp, java(default), cs(default), python
 

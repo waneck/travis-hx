@@ -42,6 +42,7 @@ for i in "${!TARGET[@]}"; do
 				eval "haxe $HX" || exit 1
 				;;
 			cpp )
+				rm -rf "$TARGET_DIR/cpp"
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-cpp \"$TARGET_DIR/cpp\""
 				if [ ! $ARCH = "i686" ]; then
 					HXFLAGS_EXTRA="-D HXCPP_M64 $HXFLAGS_EXTRA"
@@ -50,11 +51,13 @@ for i in "${!TARGET[@]}"; do
 				eval "haxe $HX" || exit 1
 				;;
 			cs )
+				rm -rf "$TARGET_DIR/cs"
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-cs \"$TARGET_DIR/cs\""
 				HX="$HXFLAGS $HXFLAGS_EXTRA"
 				eval "haxe $HX" || exit 1
 				;;
 			java )
+				rm -rf "$TARGET_DIR/java"
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-java \"$TARGET_DIR/java\""
 				HX="$HXFLAGS $HXFLAGS_EXTRA"
 				eval "haxe $HX" || exit 1
