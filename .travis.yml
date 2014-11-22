@@ -7,6 +7,8 @@ env:
       # SAUCE_USERNAME
     - secure: "CgBkZlD50ICcik+vYxiKUU/gLGz8G2a62u+k4VoinbOMR9eWk2mk5Qxt4dVMZH2cYVBzFrBooFm/2R+DjrlImM4KoUEtHwW7uPSrEuIGTcIwx7D7wtF1BmJnnnt2Tn5Aq8osYby0plLtPyCQ6TFBDppXc9fnNQnVglZ0HA3XcNE="
   matrix:
+    - TARGET=java
+    - TARGET=java ARCH=i686
     - TARGET=cs
     - TARGET=cs ARCH=i686
     - TARGET=neko
@@ -15,8 +17,6 @@ env:
     - TARGET=cpp ARCH=i686
     - TARGET=flash9 
     - TARGET=as3
-    - TARGET=java
-    - TARGET=java ARCH=i686
     - TARGET=flash8 
     - TARGET=python 
     - TARGET=python ARCH=i686

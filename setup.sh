@@ -74,7 +74,7 @@ for i in "${!SETUP[@]}"; do
 			fi
 			;;
 		java )
-			testprog javac -version || install openjdk || sudo apt-get install -y openjdk-7-jdk || install openjdk-7-jdk || exit 1
+			testprog javac -version || install openjdk || install openjdk-7-jdk || exit 1
 			retry haxelib git hxjava https://github.com/HaxeFoundation/hxjava
 			javac -version || exit 1
 			;;
