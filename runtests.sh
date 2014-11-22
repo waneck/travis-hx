@@ -145,6 +145,10 @@ for i in "${!TARGET[@]}"; do
 				fi
 				;;
 			java )
+				if [ $ARCH = "i686" ]; then
+					# max priority
+					export PATH=/usr/lib/jvm/java-7-openjdk-i386/bin:$PATH
+				fi
 				if [ -z $BUILTFILE ]; then
 					HASRUN=0
 					for file in "$TARGET_DIR/java/"*.jar; do
