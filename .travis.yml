@@ -19,7 +19,6 @@ env:
     - TARGET=as3
     - TARGET=flash8 
     - TARGET=python 
-    - TARGET=python ARCH=i686
     - TARGET=js TOOLCHAIN=default
     - TARGET=js TOOLCHAIN=default ARCH=i686
     - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=.sauce-browsers.json
