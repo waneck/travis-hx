@@ -90,7 +90,8 @@ for i in "${!SETUP[@]}"; do
 					exit 1
 				fi
 				retry wget -O $HOME/mono32.tar.xz http://waneck-pub.s3-website-us-east-1.amazonaws.com/unitdeps/mono32.tar.xz || exit 1
-				sudo tar -xvf $HOME/mono32.tar.xz -C /usr/bin || exit 1
+				sudo tar -xvf $HOME/mono32.tar.xz -C /tmp || exit 1
+				sudo cp /tmp/mono/bin/mono32 /usr/bin || exit 1
 			fi
 			retry haxelib git hxcs https://github.com/HaxeFoundation/hxcs
 			mcs --version || exit 1
