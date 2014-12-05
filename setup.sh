@@ -61,6 +61,8 @@ for i in "${!SETUP[@]}"; do
 			;;
 		cpp )
 			retry haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
+			cd $HOME/haxelib/hxcpp/git/tools/hxcpp
+			haxe compile.hxml
 			cd $HOME/haxelib/hxcpp/git/project
 			if [ $OS = "mac" ]; then
 				neko build.n -DHXCPP_GCC || exit 1
