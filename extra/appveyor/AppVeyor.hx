@@ -214,6 +214,8 @@ class AppVeyor
 	static function setupHxcpp()
 	{
 		cmd('haxelib', ['git','hxcpp','https://github.com/HaxeFoundation/hxcpp'],3);
+		cd('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\tools\\hxcpp');
+		cmd('haxe',['compile.hxml']);
 		cd('C:\\HaxeToolkit\\haxe\\lib\\hxcpp\\git\\project');
 		if (Sys.getEnv("ARCH") == "x86_64")
 		{
