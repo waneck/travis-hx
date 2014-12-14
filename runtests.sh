@@ -27,6 +27,8 @@ for i in "${!TARGET[@]}"; do
 						fi
 						killall nekotools
 						nekotools server &
+						# wait a while for the nekotools server to initialize
+						sleep .5
 						echo "phantomjs test"
 						evaltest phantomjs $(dirname $0)/extra/phantom/testphantom.js || exit 1
 
