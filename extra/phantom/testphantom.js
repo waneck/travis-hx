@@ -5,8 +5,8 @@ page.open('http://localhost:2000/unit-js.html', function(status) {
 		return phantom.exit(1);
 	}
 
-	var delay = 200,
-			retries = 100; // 20 seconds
+	var delay = 1000,
+			retries = 100; // 100 seconds
 
 	function getContent() {
 		return page.evaluate(function () {
