@@ -22,6 +22,9 @@ env:
     - TARGET=js TOOLCHAIN=default ARCH=i686
     - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=.sauce-browsers.json
     - TARGET=php
+    - TARGET=neko HAXE_VER=d10551d
+    - TARGET=neko HAXE_VER=3.1.3
+    - TARGET=neko HAXE_VER=3.1.2
 
 matrix:
   fast_finish: true
