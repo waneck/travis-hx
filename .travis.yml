@@ -7,21 +7,27 @@ env:
       # SAUCE_USERNAME
     - secure: "CgBkZlD50ICcik+vYxiKUU/gLGz8G2a62u+k4VoinbOMR9eWk2mk5Qxt4dVMZH2cYVBzFrBooFm/2R+DjrlImM4KoUEtHwW7uPSrEuIGTcIwx7D7wtF1BmJnnnt2Tn5Aq8osYby0plLtPyCQ6TFBDppXc9fnNQnVglZ0HA3XcNE="
   matrix:
-    - TARGET=java
-    - TARGET=java ARCH=i686
-    - TARGET=cs
-    - TARGET=cs ARCH=i686
+    # - TARGET=java
+    # - TARGET=java ARCH=i686
+    # - TARGET=cs
+    # - TARGET=cs ARCH=i686
     - TARGET=neko
     - TARGET=neko ARCH=i686
-    - TARGET=cpp
-    - TARGET=cpp ARCH=i686
-    - TARGET=flash9 
-    - TARGET=as3
-    - TARGET=python 
-    - TARGET=js TOOLCHAIN=default
-    - TARGET=js TOOLCHAIN=default ARCH=i686
-    - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=.sauce-browsers.json
-    - TARGET=php
+    # - TARGET=cpp
+    # - TARGET=cpp ARCH=i686
+    # - TARGET=flash9 
+    # - TARGET=as3
+    # - TARGET=python 
+    # - TARGET=js TOOLCHAIN=default
+    # - TARGET=js TOOLCHAIN=default ARCH=i686
+    # - TARGET=js TOOLCHAIN=browser SAUCE_BROWSERS=.sauce-browsers.json
+    # - TARGET=php
+    - TARGET=neko HAXE_VAR=d10551d
+    - TARGET=neko HAXE_VAR=master
+    - TARGET=neko HAXE_VAR=3.1.3
+    - TARGET=neko HAXE_VAR=3.1.2
+    - TARGET=neko HAXE_VAR=3.1.1
+    - TARGET=neko HAXE_VAR=3.1.0
 
 matrix:
   fast_finish: true

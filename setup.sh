@@ -1,4 +1,6 @@
 #!/bin/bash
+TRAVIS_HX=$PWD
+
 source $(dirname $0)/defaults.sh
 
 # compile neko
@@ -33,21 +35,7 @@ neko -version || exit 1
 echo "neko v$(neko -version)"
 
 # get haxe
-echo "getting haxe"
-sudo rm -rf /usr/lib/haxe
-sudo rm -f /usr/bin/haxe*
-DIR=$OS$ARCH_BITS
-if [ $OS = "mac" ]; then
-	DIR=mac
-fi
-retry wget -O $HOME/haxe.tgz "http://hxbuilds.s3-website-us-east-1.amazonaws.com/builds/haxe/$DIR/haxe_latest.tar.gz"
-cd $HOME
-tar -zxf haxe.tgz
-cd haxe*
-sudo mkdir -p /usr/lib/haxe
-sudo cp -Rf * /usr/lib/haxe
-sudo ln -s /usr/lib/haxe/haxe* /usr/bin
-haxe 2>&1 | head -n 1 || exit 1
+$TRAVIS_HX/gethaxe.sh
 
 # setup haxelib
 echo "setup haxelib"
