@@ -31,6 +31,7 @@ get_haxe_git()
     git clone --recursive git://github.com/HaxeFoundation/haxe.git haxe
     cd haxe
     git checkout $1
+    echo `git log -1 --oneline --abbrev-commit`
     make libs haxe tools
     sudo make install
 }
@@ -46,10 +47,10 @@ case $HAXE_VAR in
     get_haxe_build "haxe_2014-03-29_master_a04aec3.tar.gz"
     ;;
 "3.1.1")
-    get_haxe_build "haxe_2014-03-15_development_2802b08.tar.gz"
+    get_haxe_git "v3.1.1"
     ;;
 "3.1.0")
-    get_haxe_build "haxe_2014-03-05_master_f6d72e2.tar.gz"
+    get_haxe_git "v3.1.0"
     ;;
 *)
     get_haxe_git $HAXE_VAR
