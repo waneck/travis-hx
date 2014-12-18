@@ -1,7 +1,7 @@
 #!/bin/bash
-TRAVIS_HX=$PWD
+export TRAVIS_HX=$PWD
 
-source $(dirname $0)/defaults.sh
+source $TRAVIS_HX/defaults.sh
 
 # compile neko
 if [ ! -f /usr/bin/neko ]; then

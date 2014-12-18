@@ -3,6 +3,8 @@
 sudo rm -rf /usr/lib/haxe
 sudo rm -f /usr/bin/haxe*
 
+source $TRAVIS_HX/defaults.sh
+
 get_haxe_build()
 {
     echo "getting already built haxe: "$1
