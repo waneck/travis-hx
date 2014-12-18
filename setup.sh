@@ -1,5 +1,5 @@
 #!/bin/bash
-export TRAVIS_HX=$PWD
+export TRAVIS_HX=$(dirname $0)
 
 source $TRAVIS_HX/defaults.sh
 
