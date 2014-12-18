@@ -25,6 +25,7 @@ get_haxe_build()
 get_haxe_git()
 {
     echo "building haxe from git: "$1
+    # fix mac
     sudo apt-get install ocaml zlib1g-dev libgc-dev -qq
     cd $HOME
     rm -rf haxe
@@ -36,7 +37,7 @@ get_haxe_git()
     sudo make install
 }
 
-case $HAXE_VAR in
+case $HAXE_VER in
 "" | "latest" )
     get_haxe_build "haxe_latest.tar.gz"
     ;;
@@ -46,14 +47,8 @@ case $HAXE_VAR in
 "3.1.2")
     get_haxe_build "haxe_2014-03-29_master_a04aec3.tar.gz"
     ;;
-"3.1.1")
-    get_haxe_git "v3.1.1"
-    ;;
-"3.1.0")
-    get_haxe_git "v3.1.0"
-    ;;
 *)
-    get_haxe_git $HAXE_VAR
+    get_haxe_git $HAXE_VER
     ;;
 esac
 
