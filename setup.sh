@@ -29,6 +29,7 @@ if [ ! -f /usr/bin/neko ]; then
 	sudo chmod +x /usr/lib/neko/neko*
 	sudo ln -s /usr/lib/neko/neko* /usr/bin
 	sudo ln -s /usr/lib/neko/lib* /usr/lib
+	sudo ln -s /usr/lib/neko/*.h /usr/include
 fi
 
 neko -version || exit 1
