@@ -30,7 +30,7 @@ if [ ! -f /usr/bin/neko ]; then
 	sudo ln -s /usr/lib/neko/neko* /usr/bin
 	sudo ln -s /usr/lib/neko/lib* /usr/lib
 
-	retry git clone --depth 1 git@github.com:HaxeFoundation/neko.git /tmp/neko
+	retry git clone --depth 1 https://github.com/HaxeFoundation/neko.git /tmp/neko
 	sudo cp /tmp/neko/vm/*.h /usr/include
 fi
 
