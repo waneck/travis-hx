@@ -29,7 +29,9 @@ if [ ! -f /usr/bin/neko ]; then
 	sudo chmod +x /usr/lib/neko/neko*
 	sudo ln -s /usr/lib/neko/neko* /usr/bin
 	sudo ln -s /usr/lib/neko/lib* /usr/lib
-	sudo ln -s /usr/lib/neko/include/*.h /usr/include
+
+	retry git clone --depth 1 git@github.com:HaxeFoundation/neko.git /tmp/neko
+	sudo cp /tmp/neko/vm/*.h /usr/include
 fi
 
 neko -version || exit 1
