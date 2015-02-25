@@ -31,7 +31,8 @@ get_haxe_git()
     rm -rf haxe
     git clone --recursive git://github.com/HaxeFoundation/haxe.git haxe
     cd haxe
-    git checkout $1
+    git checkout $1 || exit 1
+    git submodule update || exit 1
     echo `git log -1 --oneline --abbrev-commit`
     make libs haxe tools
     sudo make install
