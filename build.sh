@@ -46,6 +46,8 @@ for i in "${!TARGET[@]}"; do
 				[[ $HXFLAGS_EXTRA && ${HXFLAGS_EXTRA-x} ]] || HXFLAGS_EXTRA="-cpp \"$TARGET_DIR/cpp\""
 				if [ ! $ARCH = "i686" ]; then
 					HXFLAGS_EXTRA="-D HXCPP_M64 $HXFLAGS_EXTRA"
+				else
+					HXFLAGS_EXTRA="-D HXCPP_M32 $HXFLAGS_EXTRA"
 				fi
 				HX="$HXFLAGS $HXFLAGS_EXTRA"
 				eval "haxe $HX" || exit 1
