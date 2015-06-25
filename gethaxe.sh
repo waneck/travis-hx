@@ -42,6 +42,9 @@ case $HAXE_VER in
 "" | "latest" )
     get_haxe_build "haxe_latest.tar.gz"
     ;;
+"3.2.0")
+    get_haxe_build "haxe_2015-05-12_master_77d171b.tar.gz"
+    ;;
 "3.1.3")
     get_haxe_build "haxe_2014-04-13_master_7be3067.tar.gz"
     ;;
